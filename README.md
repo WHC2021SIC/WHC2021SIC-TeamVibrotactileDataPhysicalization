@@ -26,11 +26,11 @@ Find more information on their <!-- update pronouns--> [website](https://).
 
 <img alt="Name's picture" src="images/portraits/Renan.jpg" width="100px" height="auto"/>
 
-Renan Guarese is an HCI researcher and PhD student in Computer Science at RMIT - Australia. He btained his MSc. degree in Computer Science at UFRGS, studying Human-Computer interaction. Worked with Data Visualization in Augmented Reality, including a Situated Visualization of Electromagnetic Compatibility project at Halmstad University, in Sweden. Mainly uses Unity, Android and the HoloLens for his applications. Also holds a BSc. in Computer Science from UFRGS, having spent one year at Radford University, in the USA.
+Renan Guarese is an HCI researcher and PhD student in Computer Science at RMIT - Australia. He obtained his MSc. degree in Computer Science at UFRGS, studying Human-Computer interaction. Worked with Data Visualization in Augmented Reality, including a Situated Visualization of Electromagnetic Compatibility project at Halmstad University, in Sweden. Mainly uses Unity, Android and the HoloLens for his applications. Also holds a BSc. in Computer Science from UFRGS, having spent one year at Radford University, in the USA.
 
 
  
-Find more information on his <!-- update pronouns--> [website](https://www.researchgate.net/profile/Renan-Guarese).
+Find more information on his <!-- update pronouns--> [page](https://www.researchgate.net/profile/Renan-Guarese).
 
 <!-- ### Advisor -->
 
