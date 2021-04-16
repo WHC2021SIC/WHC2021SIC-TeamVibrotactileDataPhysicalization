@@ -20,6 +20,18 @@ Name is ... <!-- insert biography -->
  
 Find more information on their <!-- update pronouns--> [website](https://).
 
+<!-- For each team member, duplicate this following subsection and update Name, biography, pronouns and website. Please store pictures under images/portraits/ and use only Name in CamelCase for filenames. -->
+
+#### Renan Guarese
+
+<img alt="Name's picture" src="images/portraits/Renan.jpg" width="100px" height="auto"/>
+
+Renan Guarese is an HCI researcher and PhD student in Computer Science at RMIT - Australia. He btained his MSc. degree in Computer Science at UFRGS, studying Human-Computer interaction. Worked with Data Visualization in Augmented Reality, including a Situated Visualization of Electromagnetic Compatibility project at Halmstad University, in Sweden. Mainly uses Unity, Android and the HoloLens for his applications. Also holds a BSc. in Computer Science from UFRGS, having spent one year at Radford University, in the USA.
+
+
+ 
+Find more information on his <!-- update pronouns--> [website](https://www.researchgate.net/profile/Renan-Guarese).
+
 <!-- ### Advisor -->
 
 <!-- Uncomment this section title and add a #### Name subsection if your team appointed an advisor. -->
