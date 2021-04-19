@@ -22,6 +22,13 @@ Find more information on their <!-- update pronouns--> [website](https://).
 
 <!-- For each team member, duplicate this following subsection and update Name, biography, pronouns and website. Please store pictures under images/portraits/ and use only Name in CamelCase for filenames. -->
 
+#### Franklin Bastidas
+
+<img alt="Name's picture" src="images/portraits/Frank.png" width="100px" height="auto"/>
+
+Franklin Bastidas is currently a MSc. student in Computer Science at the Federal University of Rio Grande do Sul, his recent research areas are focused on the simulation of physical movements, human-computer interaction and control of haptic devices. He received his bachelor's degree in Mechatronics Engineering at the Instituto Tecnológico Metropolitano, Medellín in 2019, where he was associated with two research projects focused on meteorological data and swarm robotics design and control.
+
+
 #### Renan Guarese
 
 <img alt="Name's picture" src="images/portraits/Renan.jpg" width="100px" height="auto"/>
