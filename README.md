@@ -102,10 +102,12 @@ Once this documentation becomes very comprehensive, the main file can be split i
 ## Abstract
 
 <!-- Summarize your project: for now copy the short pitch from your proposal -->
+We present a visuo-haptic display that enhances the experience in data visualization applications. An adaptive vibrotactile physicalization process converts information into vibration patterns that the user feels on top of 2D charts.
 
 ## Introduction
 
 <!-- Explain your project: for now copy the 300-word description from your proposal -->
+We present a visuo-haptic approach and system that augments the visual experience of graphic data visualization with meaningful vibrotactile information. The user of our system explores charts and graphs either on a video monitor or on printed paper. When touching the data visualization, they feel vibrotactile patterns on the back of their hands that communicate other dimensions of the data at the point of contact that are not printed but help understand the data. The system recognizes the interaction location on the chart by means of a set of force sensors placed at the corners of the supporting surface (either a plastic clipboard or a video monitor). An array of vibrotactile actuators placed at the joints on the back of the user's hand modulate frequency and amplitude to build signals that convey the appropriate stimuli, in a process of dynamic physicalization.
 
 ### Documentation
 
