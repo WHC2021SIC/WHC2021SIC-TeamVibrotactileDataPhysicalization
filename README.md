@@ -17,7 +17,7 @@ https://2021.worldhaptics.org/sic/
 <img alt="Name's picture" src="images/portraits/Name.jpg" width="100px" height="auto"/>
 
 Name is ... <!-- insert biography -->
- 
+
 Find more information on their <!-- update pronouns--> [website](https://).
 
 <!-- For each team member, duplicate this following subsection and update Name, biography, pronouns and website. Please store pictures under images/portraits/ and use only Name in CamelCase for filenames. -->
@@ -28,16 +28,21 @@ Find more information on their <!-- update pronouns--> [website](https://).
 
 Franklin Bastidas is currently a MSc. student in Computer Science at the Federal University of Rio Grande do Sul, his recent research areas are focused on the simulation of physical movements, human-computer interaction and control of haptic devices. He received his bachelor's degree in Mechatronics Engineering at the Instituto Tecnológico Metropolitano, Medellín in 2019, where he was associated with two research projects focused on meteorological data and swarm robotics design and control.
 
-
 #### Renan Guarese
 
-<img alt="Name's picture" src="images/portraits/Renan.jpg" width="100px" height="auto"/>
+<img alt="Renan Guarese's picture" src="images/portraits/Renan.jpg" width="100px" height="auto"/>
 
 Renan Guarese is an HCI researcher and PhD student in Computer Science at RMIT - Australia. He obtained his MSc. degree in Computer Science at UFRGS, studying Human-Computer interaction. Worked with Data Visualization in Augmented Reality, including a Situated Visualization of Electromagnetic Compatibility project at Halmstad University, in Sweden. Mainly uses Unity, Android and the HoloLens for his applications. Also holds a BSc. in Computer Science from UFRGS, having spent one year at Radford University, in the USA.
 
-
- 
 Find more information on his <!-- update pronouns--> [page](https://www.researchgate.net/profile/Renan-Guarese).
+
+### Yhonatan Iquiapaza
+
+<img alt="Yhonatan Iquiapaza' picture" src="images/portraits/Yhonatan.jpg" width="100px" height="auto">
+
+Yhonatan Iquiapaza is currently MSc. student in Computer Science at Federal University of Rio Grande do Sul, his research focus on Data Visualization, Human-Computer Interaction, Immersive Analytics, Physicalization and Virtual/Augmented Reality. He finished his studies as a bachelor in System Engineering at Universidad Nacional de San Agustin, in Arequipa-Peru. He usually uses Unity, Javascript and Hololens.
+
+Find more information on his [page](https://www.researchgate.net/profile/Yhonatan-Iquiapaza).
 
 <!-- ### Advisor -->
 
@@ -49,8 +54,8 @@ Find more information on his <!-- update pronouns--> [page](https://www.research
 
 <img alt="Christian Frissons's picture" src="images/portraits/ChristianFrisson.jpg" width="100px" height="auto"/>
 
-Christian Frisson is an associate researcher at the Input Devices and Music Interaction Laboratory (IDMIL) (2021), previously postdoctoral researcher at McGill University with the IDMIL (2019-2020), at the University of Calgary with the Interactions Lab (2017-2018) and at Inria in France with the Mjolnir team (2016-2017). He obtained his PhD at the University of Mons, numediart Institute, in Belgium (2015); his MSc in “Art, Science, Technology” from Institut National Polytechnique de Grenoble with the Association for the Creation and Research on Expression Tools (ACROE), in France (2006); his Masters in Electrical (Metrology) and Mechanical (Acoustics) Engineering from ENSIM in Le Mans, France (2005). 
-Christian Frisson is a researcher in Human-Computer Interaction, with expertise in Information Visualization, Multimedia Information Retrieval, and Tangible/Haptic Interaction. Christian creates and evaluates user interfaces for manipulating multimedia data. Christian favors obtaining replicable, reusable and sustainable results through open-source software, open hardware and open datasets. 
+Christian Frisson is an associate researcher at the Input Devices and Music Interaction Laboratory (IDMIL) (2021), previously postdoctoral researcher at McGill University with the IDMIL (2019-2020), at the University of Calgary with the Interactions Lab (2017-2018) and at Inria in France with the Mjolnir team (2016-2017). He obtained his PhD at the University of Mons, numediart Institute, in Belgium (2015); his MSc in “Art, Science, Technology” from Institut National Polytechnique de Grenoble with the Association for the Creation and Research on Expression Tools (ACROE), in France (2006); his Masters in Electrical (Metrology) and Mechanical (Acoustics) Engineering from ENSIM in Le Mans, France (2005).
+Christian Frisson is a researcher in Human-Computer Interaction, with expertise in Information Visualization, Multimedia Information Retrieval, and Tangible/Haptic Interaction. Christian creates and evaluates user interfaces for manipulating multimedia data. Christian favors obtaining replicable, reusable and sustainable results through open-source software, open hardware and open datasets.
 With his co-authors, Christian obtained the IEEE VIS 2019 Infovis Best Paper award and was selected among 4 finalists for IEEE Haptics Symposium 2020 Most Promising WIP.
 
 Find more information on his [website](https://frisson.re).
@@ -59,7 +64,7 @@ Find more information on his [website](https://frisson.re).
 
 <img alt="Jun Nishida's picture" src="images/portraits/JunNishida.jpg" width="100px" height="auto"/>
 
-Jun Nishida is **Currently** Postdoctoral Fellow at University of Chicago & Research Fellow at Japan Society for the Promotion of Science (JSPS PDRA) / **Previously** JSPS Research Fellow (DC1), Project Researcher at Japanese Ministry of Internal Affairs and Communications, SCOPE Innovation Program & PhD Fellow at Microsoft Research Asia / Graduated from Empowerment Informatics Program, University of Tsukuba, Japan. 
+Jun Nishida is **Currently** Postdoctoral Fellow at University of Chicago & Research Fellow at Japan Society for the Promotion of Science (JSPS PDRA) / **Previously** JSPS Research Fellow (DC1), Project Researcher at Japanese Ministry of Internal Affairs and Communications, SCOPE Innovation Program & PhD Fellow at Microsoft Research Asia / Graduated from Empowerment Informatics Program, University of Tsukuba, Japan.
 
 I’m a postdoctoral fellow at University of Chicago. I have received my PhD in Human Informatics at University of Tsukuba, Japan in 2019. I am interested in designing experiences in which all people can maximize and share their physical and cognitive capabilities to support each other. I explore the possibility of this interaction in the field of rehabilitation, education, and design. To this end, I design wearable cybernic interfaces which share one’s embodied and social perspectives among people by means of electrical muscle stimulation, exoskeletons, virtual/augmented reality systems. Received more than 40 awards including Microsoft Research Asia Fellowship Award, national grants, and three University Presidential Awards. Review service at ACM SIGCHI, SIGGRAPH, UIST, TEI, IEEE VR, HRI.
 
@@ -85,10 +90,10 @@ Once this documentation becomes very comprehensive, the main file can be split i
 
 - [Abstract](#abstract)
 - [Introduction](#introduction)
-  * [Documentation](#documentation)
-    + [Hardware](#hardware)
+  - [Documentation](#documentation)
+    - [Hardware](#hardware)
       - [Sensors wiring](#sensors-wiring)
-    + [Software](#software)
+    - [Software](#software)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
@@ -114,6 +119,7 @@ Once this documentation becomes very comprehensive, the main file can be split i
 
 We use the SparkFun Qwiic system to rapidly and remotely prototype sensors without much soldering. Qwiic uses the I2C communication protocol with addresses assigned per board model.
 Our Qwiic-based architectures may require:
+
 - 1 Qwiic MUX I2C multiplexer board per group identical sensor/board model (example: needed by 2 flex finger boards in the figures below)
 - 1 Qwiic ADC board per group of 4 sensors that are not implemented as Qwiic boards (example: needed by 4 FSRs sensors in the figures below)
 
@@ -129,12 +135,11 @@ Made with [drawio-desktop](https://github.com/jgraph/drawio-desktop/) (online ve
 
 <!-- Describe your software components -->
 
-
 ## Acknowledgements
 
 <!-- Describe your software components -->
 
-SIC chairs would like to thank Evan Pezent, Zane A. Zook and Marcia O'Malley from [MAHI Lab](http://mahilab.rice.edu) at Rice University for having distributed to them 2 [Syntacts](https://www.syntacts.org) kits for the [IROS 2020 Intro to Haptics for XR Tutorial](http://iros-haptics-tutorial.org/). 
+SIC chairs would like to thank Evan Pezent, Zane A. Zook and Marcia O'Malley from [MAHI Lab](http://mahilab.rice.edu) at Rice University for having distributed to them 2 [Syntacts](https://www.syntacts.org) kits for the [IROS 2020 Intro to Haptics for XR Tutorial](http://iros-haptics-tutorial.org/).
 SIC co-chair Christian Frisson would like to thank Edu Meneses and Johnty Wang from [IDMIL](http://idmil.org) at McGill University for their recommendations on Raspberry Pi hats for audio and sensors.
 
 ## License
