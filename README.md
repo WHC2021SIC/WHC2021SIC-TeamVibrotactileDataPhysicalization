@@ -50,6 +50,12 @@ Find more information on his [page](https://www.researchgate.net/profile/Yhonata
 
 Carlos Johansson is currently MSc. student in Computer Science at Federal University of Rio Grande do Sul, his research focus on Human-Computer Interaction, Physicalization and Virtual/Augmented Reality. He received a bachelor's degree in biomedical informatics from the Federal University of Health Sciences of Porto Alegre.
 
+### Mariane Giambastiani
+
+<img alt="Mariane Giambastiani's picture" src="images/portraits/MarianeGiambastiani.jpg" width="100px" height="auto">
+
+Mariane Giambastiani is currently MSc. student in Computer Science at Federal University of Rio Grande do Sul, his research focuses on Data Visualization, Human-Computer Interaction, Immersive Analytics, Physicalization and Augmented Reality. She obtained her BSc. in Computer Engineering from Federal University of Rio Grande do Sul.
+
 <!-- ### Advisor -->
 
 <!-- Uncomment this section title and add a #### Name subsection if your team appointed an advisor. -->
