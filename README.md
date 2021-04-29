@@ -42,6 +42,12 @@ Find more information on his <!-- update pronouns--> [page](https://www.research
 
 Yhonatan Iquiapaza is currently MSc. student in Computer Science at Federal University of Rio Grande do Sul, his research focus on Data Visualization, Human-Computer Interaction, Immersive Analytics, Physicalization and Virtual/Augmented Reality. He finished his studies as a bachelor in System Engineering at Universidad Nacional de San Agustin, in Arequipa-Peru. He usually uses Unity, Javascript and Hololens.
 
+### Yhonatan Iquiapaza
+
+<img alt="Carlos Johansson's picture" src="images/portraits/johansson.jpg" width="100px" height="auto">
+
+Carlos Johansson is currently MSc. student in Computer Science at Federal University of Rio Grande do Sul, his research focus on Human-Computer Interaction, Physicalization and Virtual/Augmented Reality. He received a bachelor's degree in biomedical informatics from the Federal University of Health Sciences of Porto Alegre.
+
 Find more information on his [page](https://www.researchgate.net/profile/Yhonatan-Iquiapaza).
 
 <!-- ### Advisor -->
