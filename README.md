@@ -10,18 +10,6 @@ https://2021.worldhaptics.org/sic/
 
 ### Team
 
-<!-- For each team member, duplicate this following subsection and update Name, biography, pronouns and website. Please store pictures under images/portraits/ and use only Name in CamelCase for filenames. -->
-
-#### Name
-
-<img alt="Name's picture" src="images/portraits/Name.jpg" width="100px" height="auto"/>
-
-Name is ... <!-- insert biography -->
-
-Find more information on their <!-- update pronouns--> [website](https://).
-
-<!-- For each team member, duplicate this following subsection and update Name, biography, pronouns and website. Please store pictures under images/portraits/ and use only Name in CamelCase for filenames. -->
-
 #### Franklin Bastidas
 
 <img alt="Name's picture" src="images/portraits/Frank.png" width="100px" height="auto"/>
