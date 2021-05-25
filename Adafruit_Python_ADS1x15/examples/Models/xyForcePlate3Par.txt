@@ -1,0 +1,63 @@
+Mean: F0    346.853736
+F1    294.243688
+F2    334.127316
+F3    522.760148
+x       8.400000
+y      12.000000
+Name: mean, dtype: float64
+Std: F0    33.282460
+F1    51.946306
+F2    32.821546
+F3    31.031503
+x      5.332927
+y      7.823059
+Name: std, dtype: float64
+
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(120)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(120)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    #x = layers.Dense(70)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)
+    
+    third_dense = layers.Dense(units='110', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+model = build_model()
+
+# Specify the optimizer, and compile the model with loss functions for both outputs
+optimizer = tf.keras.optimizers.SGD(learning_rate=0.001)
+model.compile(optimizer=optimizer,
+              loss={'x_output': 'mse', 'y_output': 'mse'},
+              metrics={'x_output': tf.keras.metrics.RootMeanSquaredError(),
+                       'y_output': tf.keras.metrics.RootMeanSquaredError()})
+
+
+
+1250/1250 [==============================] - 8s 6ms/step - loss: 0.0988 - x_output_loss: 0.0507 - y_output_loss: 0.0481 - x_output_root_mean_squared_error: 0.2252 - y_output_root_mean_squared_error: 0.2192
+
+loss: 0.098770871758461
+x_loss: 0.0507129468023777
+y_loss: 0.048057980835437775
+x_rmse: 0.22519534826278687
+y_rmse: 0.2192213088274002

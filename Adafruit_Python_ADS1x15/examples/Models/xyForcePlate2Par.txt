@@ -1,0 +1,83 @@
+model:
+
+def build_model():
+    # Define model layers.
+    input_layer = Input(shape=(len(norm_train_X[1]),))
+    first_dense = Dense(units='128', activation='relu')(input_layer)    
+    second_dense = Dense(units='128', activation='relu')(first_dense)
+    third_dense = Dense(units='128', activation='relu')(second_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+train:
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, norm_train_Y,
+                    epochs=500, batch_size = 18, validation_data=(norm_test_X, norm_test_Y))
+
+Values normaliza:
+
+dataTrain
+Mean: F0    346.869044
+F1    294.217750
+F2    334.103525
+F3    522.768575
+x       8.401519
+y      11.994506
+Name: mean, dtype: float64
+Std: F0    33.297691
+F1    51.937174
+F2    32.871508
+F3    31.055191
+x      5.337706
+y      7.822753
+Name: std, dtype: float64
+dataTest
+Mean: F0    346.87190
+F1    294.26332
+F2    334.16826
+F3    522.81742
+x       8.38710
+y      12.00486
+Name: mean, dtype: float64
+Std: F0    33.231934
+F1    52.032546
+F2    32.798861
+F3    30.851650
+x      5.315289
+y      7.841425
+Name: std, dtype: float64
+dataVal
+Mean: F0    346.76980
+F1    294.32290
+F2    334.17130
+F3    522.65485
+x       8.41005
+y      12.01590
+Name: mean, dtype: float64
+Std: F0    33.285338
+F1    51.876099
+F2    32.650168
+F3    31.161134
+x      5.335918
+y      7.801437
+Name: std, dtype: float64
+
+evaluation:
+
+1250/1250 [==============================] - 8s 6ms/step - loss: 0.0612 - x_output_loss: 0.0324 - y_output_loss: 0.0288 - x_output_root_mean_squared_error: 0.1801 - y_output_root_mean_squared_error: 0.1696
+
+loss: 0.061222486197948456
+x_loss: 0.032442327588796616
+y_loss: 0.028780197724699974
+x_rmse: 0.18011753261089325
+y_rmse: 0.16964727640151978
