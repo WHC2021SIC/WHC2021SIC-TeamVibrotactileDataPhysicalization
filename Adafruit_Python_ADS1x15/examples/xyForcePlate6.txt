@@ -1,31 +1,36 @@
-Mean: F0    346.853736
-F1    294.243688
-F2    334.127316
-F3    522.760148
-x       8.400000
-y      12.000000
+Mean: F0    385.350284
+F1    132.483951
+F2    366.454000
+F3    355.273467
+x       7.500000
+y       7.500000
 Name: mean, dtype: float64
-Std: F0    33.282460
-F1    51.946306
-F2    32.821546
-F3    31.031503
-x      5.332927
-y      7.823059
-Name: std, dtype: float64
+Std: F0    109.484312
+F1    185.298980
+F2    176.520386
+F3    201.882096
+x       6.123792
+y       6.123792
 
+dataTrain, dataTest = train_test_split(datasFull, test_size=0.1)
+dataTrain, dataVal = train_test_split(dataTrain, test_size=0.2)
 
 def build_model():
     # Define model layers.
     input_layer = layers.Input(shape=(len(norm_train_X[1]),))
-    x = layers.Dense(120)(input_layer)   
+    x = layers.Dense(130)(input_layer)   
     x = layers.BatchNormalization()(x)
     x = tf.keras.activations.relu(x)
     
-    x = layers.Dense(120)(x)   
+    x = layers.Dense(130)(x)   
     x = layers.BatchNormalization()(x)
     x = tf.keras.activations.relu(x)
     
-    third_dense = layers.Dense(units='110', activation='relu')(x)
+    #x = layers.Dense(70)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)
+    
+    third_dense = layers.Dense(units='130', activation='relu')(x)
     #third_dense=layers.Dropout(0.5)(third_dense)
     
     # Y1 output will be fed from the first dense
@@ -48,12 +53,14 @@ model.compile(optimizer=optimizer,
               metrics={'x_output': tf.keras.metrics.RootMeanSquaredError(),
                        'y_output': tf.keras.metrics.RootMeanSquaredError()})
 
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=300, validation_data=(norm_test_X, test_Y))
 
+254/254 [==============================] - 2s 6ms/step - loss: 0.0728 - x_output_loss: 0.0226 - y_output_loss: 0.0502 - x_output_root_mean_squared_error: 0.1505 - y_output_root_mean_squared_error: 0.2240
 
-1250/1250 [==============================] - 8s 6ms/step - loss: 0.0988 - x_output_loss: 0.0507 - y_output_loss: 0.0481 - x_output_root_mean_squared_error: 0.2252 - y_output_root_mean_squared_error: 0.2192
-
-loss: 0.098770871758461
-x_loss: 0.0507129468023777
-y_loss: 0.048057980835437775
-x_rmse: 0.22519534826278687
-y_rmse: 0.2192213088274002
+loss: 0.07282107323408127
+x_loss: 0.022636855021119118
+y_loss: 0.0501842238008976
+x_rmse: 0.15045548975467682
+y_rmse: 0.22401835024356842
