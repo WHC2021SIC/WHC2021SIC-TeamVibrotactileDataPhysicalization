@@ -15,8 +15,8 @@ offset[3]  = adc.read_adc(3, gain=GAIN)
 
 import numpy as np
 
-CoordX=15
-CoordY=15
+CoordX=6
+CoordY=9
 Ndados=5000
 
 F1 = np.empty(Ndados, dtype=object)
