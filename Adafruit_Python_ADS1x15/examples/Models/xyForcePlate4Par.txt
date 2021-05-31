@@ -1,0 +1,56 @@
+Mean: F0    346.853736
+F1    294.243688
+F2    334.127316
+F3    522.760148
+x       8.400000
+y      12.000000
+Name: mean, dtype: float64
+Std: F0    33.282460
+F1    51.946306
+F2    32.821546
+F3    31.031503
+x      5.332927
+y      7.823059
+Name: std, dtype: float64
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(135)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(130)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    #x = layers.Dense(70)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)
+    
+    third_dense = layers.Dense(units='135', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=1100, batch_size=20, validation_data=(norm_test_X, test_Y), verbose=2)
+
+1250/1250 [==============================] - 9s 7ms/step - loss: 4.0830 - x_output_loss: 1.4803 - y_output_loss: 2.6027 - x_output_root_mean_squared_error: 1.2167 - y_output_root_mean_squared_error: 1.6133
+
+loss: 4.082976818084717
+x_loss: 1.4803173542022705
+y_loss: 2.6026551723480225
+x_rmse: 1.2166829109191895
+y_rmse: 1.6132745742797852
+

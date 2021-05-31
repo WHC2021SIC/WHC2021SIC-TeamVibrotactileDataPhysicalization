@@ -1,0 +1,68 @@
+Mean: F0    346.853736
+F1    294.243688
+F2    334.127316
+F3    522.760148
+x       8.400000
+y      12.000000
+Name: mean, dtype: float64
+Std: F0    33.115185
+F1    51.885980
+F2    32.728963
+F3    30.969697
+x      5.333023
+y      7.823199
+Name: std, dtype: float64
+
+dataTrain, dataTest = train_test_split(datasFull, test_size=0.1)
+dataTrain, dataVal = train_test_split(dataTrain, test_size=0.2)
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(130)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(130)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    #x = layers.Dense(70)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)
+    
+    third_dense = layers.Dense(units='130', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+model = build_model()
+
+# Specify the optimizer, and compile the model with loss functions for both outputs
+optimizer = tf.keras.optimizers.Adam(learning_rate=0.002)
+model.compile(optimizer=optimizer,
+              loss={'x_output': 'mse', 'y_output': 'mse'},
+              metrics={'x_output': tf.keras.metrics.RootMeanSquaredError(),
+                       'y_output': tf.keras.metrics.RootMeanSquaredError()})
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=1100, batch_size=18, validation_data=(norm_test_X, test_Y),verbose=2)
+
+141/141 [==============================] - 1s 6ms/step - loss: 5.3335 - x_output_loss: 1.8644 - y_output_loss: 3.4692 - x_output_root_mean_squared_error: 1.3654 - y_output_root_mean_squared_error: 1.8626
+
+loss: 5.333539009094238
+x_loss: 1.8643697500228882
+y_loss: 3.4691693782806396
+x_rmse: 1.3654192686080933
+y_rmse: 1.8625706434249878
+
