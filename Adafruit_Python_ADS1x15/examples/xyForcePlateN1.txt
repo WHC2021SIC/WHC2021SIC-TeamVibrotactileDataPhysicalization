@@ -1,0 +1,54 @@
+Mean: F0    408.942958
+F1    138.473131
+F2    394.008856
+F3    308.599539
+x       7.500000
+y       7.436842
+Name: mean, dtype: float64
+Std: F0    106.510489
+F1    204.268260
+F2    128.503499
+F3    149.708490
+x       5.164159
+y       5.236644
+Name: std, dtype: float64
+
+dataTrain, dataTest = train_test_split(datasFull, test_size=0.1)
+dataTrain, dataVal = train_test_split(dataTrain, test_size=0.2)
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(130)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(130)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)    
+    
+    x = layers.Dense(130)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)  
+    
+    x = layers.Dense(130)(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)    
+    
+    third_dense = layers.Dense(units='130', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=3000,validation_data=(norm_test_X, test_Y),verbose=2)
