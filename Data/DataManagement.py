@@ -7,12 +7,23 @@ class DataManagement:
     def get_data_contry(country):
         '''return a list of years by country name'''
         if country in data:
-            return data[country].tolist()
+            return data[country].tolist();
         else:
-            return []
+            return [];
     def get_data_contry_by_year(country, year):
+        '''return a list by country and by year'''
         if year in data.Year.values:
-            return data.loc[data["Year"] == year][country]
+            return data.loc[data["Year"] == year][country];
+        else:
+            return [];
+    def global_values():
+        '''return max and min global, but min general is 0'''
+        tmp = [data.Argentina.sum(), data.Bolivia.sum(), data.Brazil.sum(), data.Chile.sum(), data.Colombia.sum(), data.Ecuador.sum(), data.Guyana.sum(), data.Paraguay.sum(), data.Peru.sum(), data.Suriname.sum(), data.Uruguay.sum(), data.Venezuela.sum()]
+        return max(tmp), min(tmp);
+    def max_min_by_country(country):
+        '''return max and min value by country'''
+        if country in data:
+            return data[country].max(), data[country].min()
         else:
             return []
 
@@ -25,3 +36,5 @@ DataManagement.get_data_contry('aeru')
 DataManagement.get_data_contry('Brazil')
 DataManagement.get_data_contry('Colombia')
 DataManagement.get_data_contry_by_year('Colombia', 2020)
+print(DataManagement.global_values())
+print(DataManagement.max_min_by_country('Peru'))
