@@ -99,57 +99,57 @@ check(sig14)
 printMenu()
 
 while True:  # making a loop
-    try:  # used try so that if user pressed other than the given key error will not be shown
-        if keyboard.is_pressed('z'):  
-            print('Signal 1')
-            session.play(0, sig1)
-        if keyboard.is_pressed('x'):  
-            print('Signal 2')
-            session.play(0, sig2)
-        if keyboard.is_pressed('c'):  
-            print('Signal 3')
-            session.play(0, sig3)
-        if keyboard.is_pressed('v'):  
-            print('Signal 4')
-            session.play(0, sig4)
-        if keyboard.is_pressed('b'):  
-            print('Signal 5')
-            session.play(0, sig5)
-        if keyboard.is_pressed('n'):  
-            print('Signal 6')
-            session.play(0, sig6)
-        if keyboard.is_pressed('m'):  
-            print('Signal 7')
-            session.play(0, sig7)
-        if keyboard.is_pressed('a'):  
-            print('Signal 8')
-            session.play(0, sig8)
-        if keyboard.is_pressed('s'):  
-            print('Signal 9')
-            session.play(0, sig9)
-        if keyboard.is_pressed('d'):  
-            print('Signal 10')
-            session.play(0, sig10)
-        if keyboard.is_pressed('f'):  
-            print('Signal 11')
-            session.play(0, sig11)
-        if keyboard.is_pressed('g'):  
-            print('Signal 12')
-            session.play(0, sig12)
-        if keyboard.is_pressed('h'):  
-            print('Signal 13')
-            session.play(0, sig13)
-        if keyboard.is_pressed('j'):  
-            print('Signal 14')
-            session.play(0, sig14)
-        if keyboard.is_pressed('space'):  
-            print('Stop')
-            session.stop(0)
-            printMenu()
-        if keyboard.is_pressed('esc'):  
-            print('Finished')
-            session.stop(0)
-            session.close()
-            break  # finishing the loop
-    except:
-        break  # if user pressed a key other than the given key the loop will break
+   # try:  # used try so that if user pressed other than the given key error will not be shown
+    if keyboard.is_pressed('z'):  
+        print('Signal 1')
+        session.play(0, sig1)
+    if keyboard.is_pressed('x'):  
+        print('Signal 2')
+        session.play(0, sig2)
+    if keyboard.is_pressed('c'):  
+        print('Signal 3')
+        session.play(0, sig3)
+    if keyboard.is_pressed('v'):  
+        print('Signal 4')
+        session.play(0, sig4)
+    if keyboard.is_pressed('b'):  
+        print('Signal 5')
+        session.play(0, sig5)
+    if keyboard.is_pressed('n'):  
+        print('Signal 6')
+        session.play(0, sig6)
+    if keyboard.is_pressed('m'):  
+        print('Signal 7')
+        session.play(0, sig7)
+    if keyboard.is_pressed('a'):  
+        print('Signal 8')
+        session.play(0, sig8)
+    if keyboard.is_pressed('s'):  
+        print('Signal 9')
+        session.play(0, sig9)
+    if keyboard.is_pressed('d'):  
+        print('Signal 10')
+        session.play(0, sig10)
+    if keyboard.is_pressed('f'):  
+        print('Signal 11')
+        session.play(0, sig11)
+    if keyboard.is_pressed('g'):  
+        print('Signal 12')
+        session.play(0, sig12)
+    if keyboard.is_pressed('h'):  
+        print('Signal 13')
+        session.play(0, sig13)
+    if keyboard.is_pressed('j'):  
+        print('Signal 14')
+        session.play(0, sig14)
+    if keyboard.is_pressed('space'):  
+        print('Stop')
+        session.stop(0)
+        printMenu()
+    if keyboard.is_pressed('esc'):  
+        print('Finished')
+        session.stop(0)
+        session.close()
+        break  # finishing the loop
+    #except:
+     #   break  # if user pressed a key other than the given key the loop will break

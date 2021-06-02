@@ -86,12 +86,12 @@ for j in range(Nmean):
     mean10[j,:]=values
 meanT=np.mean(mean10, axis=0)
 
-dataSqrtInit=lengthVal(resultCon(meanT))
+#dataSqrtInit=lengthVal(resultCon(meanT))
 
-print("dataSqrtInit: {}".format(dataSqrtInit))
+#print("dataSqrtInit: {}".format(dataSqrtInit))
 
 continent = Continent() 
-
+print("Start")
 while True:
     # Read all the ADC channel values in a list.
     
@@ -104,24 +104,26 @@ while True:
         values[i] = adc.read_adc(i, gain=GAIN)
 
     
-    resultC=resultCon(np.array(values))
-    #print("dataSqrtInit: {}".format(abs(lengthVal(resultC)-dataSqrtInit)))
+    #resultC=resultCon(np.array(values))
+    #print("dataSqrtInit: {},".format(abs(lengthVal(values-meanT))))
     
-    Pos=loaded_model.predict(resultC.reshape((1,6)))
+    #Pos=loaded_model.predict(resultC.reshape((1,6)))
     
-    continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
+    #continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
     
-#     if lengthVal(resultC) > (dataSqrtInit+10):
-#         #resultC=resultCon(np.array(values))
-#         #Pos=loaded_model.predict(resultC.reshape((1,6)))
-#         print("touch")
-#     else:
-#         print("NO touch")
+    if (lengthVal(values-meanT)>25.0):
+        resultC=resultCon(np.array(values))
+        Pos=loaded_model.predict(resultC.reshape((1,6)))
+        continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
+        print("x: {}, y: {}".format(float(Pos[0]),float(Pos[1])))
+        #print("touch")
+    #else:
+        #print("NO touch")
         
     #Unpos=unorm(Pos)
     #print(Pos)
 #     print(Unpos.shape)
-    print("x: {}, y: {}".format(float(Pos[0]),float(Pos[1])))
+    #print("x: {}, y: {}".format(float(Pos[0]),float(Pos[1])))
     
 
    
