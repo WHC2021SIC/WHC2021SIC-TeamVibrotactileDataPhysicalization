@@ -106,7 +106,7 @@
                                             "m_model": {
                                                 "IOscillator": {
                                                     "x": {
-                                                        "gain": 628.3185307179587,
+                                                        "gain": 62.83185307179586,
                                                         "bias": 0.0,
                                                         "m_ptr": {
                                                             "polymorphic_id": 4,
