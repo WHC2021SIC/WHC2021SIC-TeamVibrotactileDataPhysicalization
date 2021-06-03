@@ -6,14 +6,35 @@ from math import pi
 s = Session()
 s.open()
 
-x = Sine(446) * Envelope(0.9)
+totalTime = 4
 
-s.play(0, x)
-s.play(1, x)
-s.play(2, x)
-s.play(3, x)
-s.play(4, x)
-s.play(5, x)
-s.play(6, x)
-s.play(7, x)
+brazil = Sine(446) * Envelope(totalTime,1)
+colombia = Sine(84) * Envelope(totalTime,1)
+peru = Sine(67) * Envelope(totalTime,1)
+paraguay = Sine(8) * Envelope(totalTime,1)
+argentina = Sine(74) * Envelope(totalTime,1)
+bolivia = Sine(13) * Envelope(totalTime,1)
+
+
+
+s.play(0, peru)
+s.play(1, peru)
+
+sleep(totalTime)
+
+s.play(0, colombia)
+s.play(1, colombia)
+sleep(totalTime)
+s.play(0, paraguay)
+s.play(1, paraguay)
+sleep(totalTime)
+
+s.play(0, brazil)
+s.play(1, brazil)
+
+
+sleep(totalTime)
+
+
+
 
