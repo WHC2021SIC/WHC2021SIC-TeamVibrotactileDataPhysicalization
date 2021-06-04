@@ -15,26 +15,28 @@ paraguay = Sine(8) * Envelope(totalTime,1)
 argentina = Sine(74) * Envelope(totalTime,1)
 bolivia = Sine(13) * Envelope(totalTime,1)
 
-
-
-s.play(0, peru)
-s.play(1, peru)
+s.play_all(peru)
 
 sleep(totalTime)
 
-s.play(0, colombia)
-s.play(1, colombia)
-sleep(totalTime)
-s.play(0, paraguay)
-s.play(1, paraguay)
-sleep(totalTime)
-
-s.play(0, brazil)
-s.play(1, brazil)
-
+s.play_all(colombia)
 
 sleep(totalTime)
 
+s.play_all(paraguay)
 
+sleep(totalTime)
+
+s.play_all(brazil)
+
+sleep(totalTime)
+
+s.play_all(argentina)
+
+sleep(totalTime)
+
+s.play_all(bolivia)
+
+sleep(totalTime)
 
 

@@ -1,5 +1,5 @@
 from syntacts import *
-from time import sleep
+from time import sleep,time
 from math import sin
 from math import pi
 import keyboard  # using module keyboard
@@ -98,10 +98,36 @@ check(sig14)
 
 printMenu()
 
+# measure wall time
+t0 = time()
+flagT=True
+
+totalTime = 4
+
+brazil = Sine(446) * Envelope(totalTime,1)
+colombia = Sine(84) * Envelope(totalTime,1)
+peru = Sine(67) * Envelope(totalTime,1)
+paraguay = Sine(8) * Envelope(totalTime,1)
+argentina = Sine(74) * Envelope(totalTime,1)
+bolivia = Sine(13) * Envelope(totalTime,1)
+
 while True:  # making a loop
-    try:  # used try so that if user pressed other than the given key error will not be shown
-        print('Signal 1')
-        session.play(0, sig1)
+    try:  # used try so that if user pressed other than the given key error will not be shown        
+        if(flagT):
+            print('time: {},{}'.format(time() - t0, float(brazil.length)) )
+            if ((time() - t0) >= brazil.length-0.1):
+                session.play(0, brazil)
+                session.play(1, brazil)
+                session.play(2, brazil)
+                session.play(3, brazil)
+                session.play(4, brazil)
+                session.play(5, brazil)
+                session.play(6, brazil)
+                session.play(7, brazil)
+                print('Signal 2')
+                t0=time()
+#             session.play(0, brazil)     
+#             sleep(brazil.length)
 #         if keyboard.is_pressed('x'):  
 #             print('Signal 2')
 #             session.play(0, sig2)
