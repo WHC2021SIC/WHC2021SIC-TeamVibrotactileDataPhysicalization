@@ -1,0 +1,91 @@
+Mean:
+MeanNot:
+0    326.27320
+1     12.01916
+2    310.34624
+3    222.99996
+4     -1.00000
+5     -1.00000
+Name: mean, dtype: float64
+StdNot:
+0    1.869022
+1    0.065679
+2    2.266601
+3    0.002828
+4    0.000000
+5    0.000000
+Name: std, dtype: float64
+
+Mean:
+F0       408.942958
+F1       138.473131
+F2       394.008856
+F3       308.599539
+x          7.500000
+y          7.436842
+Fdist    311.351552
+Sx         0.548101
+Sy        -0.518616
+Name: mean, dtype: float64
+Std:
+F0       106.510489
+F1       204.268260
+F2       128.503499
+F3       149.708490
+x          5.164159
+y          5.236644
+Fdist    179.464143
+Sx         0.429971
+Sy         0.476176
+Name: std, dtype: float64
+
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(130)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(130)(x)   
+    #x = layers.LSTM(128,input_shape=(1, 130))(x)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)    
+    
+    x = layers.Dense(130)(x)  
+    #x = layers.LSTM(130)(x)
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)  
+    
+    #x = layers.Dense(130)(x)   
+    #x = layers.LSTM(130)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)    
+    
+    third_dense = layers.Dense(units='130', activation='relu')(x)
+    #third_dense = layers.LSTM(units='130', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=15000,batch_size=1000, verbose=2, validation_data=(norm_test_X, test_Y), use_multiprocessing=True)
+
+
+1262/1262 [==============================] - 7s 6ms/step - loss: 0.2266 - x_output_loss: 0.1734 - y_output_loss: 0.0533 - x_output_root_mean_squared_error: 0.4164 - y_output_root_mean_squared_error: 0.2308
+
+loss: 0.2266438901424408
+x_loss: 0.17336131632328033
+y_loss: 0.0532827265560627
+x_rmse: 0.4163668155670166
+y_rmse: 0.23083050549030304

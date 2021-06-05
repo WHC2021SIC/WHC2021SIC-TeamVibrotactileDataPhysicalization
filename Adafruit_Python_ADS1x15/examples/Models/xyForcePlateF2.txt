@@ -1,0 +1,70 @@
+Mean:
+F0       380.901060
+F1        27.541588
+F2       371.605488
+F3       234.023600
+x          7.290000
+y          7.950000
+Fdist     55.419591
+Sx         0.702593
+Sy        -0.699563
+Name: mean, dtype: float64
+Std:
+F0       29.126948
+F1        9.884542
+F2       33.097822
+F3       12.678525
+x         4.507603
+y         4.920376
+Fdist    26.999260
+Sx        0.051334
+Sy        0.052649
+Name: std, dtype: float64
+
+def build_model():
+    # Define model layers.
+    input_layer = layers.Input(shape=(len(norm_train_X[1]),))
+    x = layers.Dense(130)(input_layer)   
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)
+    
+    x = layers.Dense(130)(x)
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)    
+    
+    x = layers.Dense(130)(x)  
+    x = layers.BatchNormalization()(x)
+    x = tf.keras.activations.relu(x)  
+    
+    #x = layers.Dense(130)(x)   
+    #x = layers.LSTM(130)(x)
+    #x = layers.BatchNormalization()(x)
+    #x = tf.keras.activations.relu(x)    
+    
+    third_dense = layers.Dense(units='130', activation='relu')(x)
+    #third_dense = layers.LSTM(units='130', activation='relu')(x)
+    #third_dense=layers.Dropout(0.5)(third_dense)
+    
+    # Y1 output will be fed from the first dense
+    y1_output = layers.Dense(units='1', name='x_output')(third_dense)
+    
+    # Y2 output will be fed from the second dense
+    y2_output = layers.Dense(units='1', name='y_output')(third_dense)
+
+    # Define the model with the input layer and a list of output layers
+    model = Model(inputs=input_layer, outputs=[y1_output, y2_output])
+
+    return model
+
+# Train the model for 200 epochs
+history = model.fit(norm_train_X, train_Y,
+                    epochs=25000,batch_size=1000, verbose=2, validation_data=(norm_test_X, test_Y), use_multiprocessing=True)
+
+1329/1329 [==============================] - 5s 4ms/step - loss: 0.0456 - x_output_loss: 0.0325 - y_output_loss: 0.0131 - x_output_root_mean_squared_error: 0.1803 - y_output_root_mean_squared_error: 0.1144A: 4s - loss: 0.0389 - x_output_loss: 0.0268 - y_output_loss: 0.0121 - x_ou
+
+loss: 0.04559670388698578
+x_loss: 0.03250030428171158
+y_loss: 0.013096385635435581
+x_rmse: 0.18027840554714203
+y_rmse: 0.11443943530321121
+
