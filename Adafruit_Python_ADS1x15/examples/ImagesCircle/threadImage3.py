@@ -13,7 +13,7 @@ from matplotlib.patches import Circle, Rectangle
 #Create a window
 root=Tk()
 
-root.wm_title("minimal example")
+root.wm_title("WHC 2021")
 
 root.image = plt.imread('Recurso 3.png')
 
@@ -43,6 +43,18 @@ Btn21=[9.1,0.0,1.4]
 
 Country=[Brazil,Brazil2,Peru, bolivia,colombia,venezuela,paraguai]
 
+RectColVen=[5.0,4.0,1.5,0.5,45.0]
+RectBolBra=[8.0,10.0,1.6,0.5,45.0]
+RectParBra=[9.8,12.6,1.5,0.5,45.0]
+RectPerBra=[5.0,8.5,1.3,0.5,45.0]
+RectPerCol=[3.3,6.7,1.0,0.6,10.0]
+RectColBra=[5.3,6.1,0.8,0.5,-45.0]
+RectPerBol=[5.4,10.2,1.2,0.5,-45.0]
+RectBolPar=[7.9,12.5,0.8,0.5,-45.0]
+RectVezBra=[7.3,4.5,0.8,0.5,-45.0]
+
+CountryRect=[RectColVen,RectBolBra,RectParBra,RectPerBra, RectPerCol, RectColBra, RectPerBol, RectBolPar, RectVezBra]
+
 circ=Circle((0,0),50)
 
 def on_click(event):
@@ -64,7 +76,7 @@ def on_click(event):
         canvas.draw()        
         #print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
 
-        print("Collison: {}".format(rectColi.collisionDetect(Hreal,Lreal)))
+        #print("Collison: {}".format(rectColi.collisionDetect(Hreal,Lreal)))
     
 
 def off_click(event):
@@ -123,7 +135,7 @@ class Rectan:
         cont=0
         for i in range(2):
             dist=np.dot(d,self.U[i])
-            print("Dist:{}".format(dist))
+            #print("Dist:{}".format(dist))
             if (dist<self.E[i]) and (dist>-self.E[i]):
                 cont=cont+1
         if cont>1:
@@ -132,7 +144,7 @@ class Rectan:
             return False
 
 
-ang=45.0
+'''ang=45.0
 rotAxisH=np.array([np.cos(np.deg2rad(ang)),np.sin(np.deg2rad(ang))])
 rotAxisL=np.array([-rotAxisH[1],rotAxisH[0]])
 RectLen=np.array([2.0,1.5])
@@ -142,15 +154,24 @@ RectPosC=RectCent-(rotAxisH*RectLen[0])-(rotAxisL*RectLen[1])
 
 print("RectC:{}".format(RectPosC))
 
-rect=Rectangle(RectPosC*(1/HRelation),RectLen[0]*(1/HRelation)*2.0,RectLen[1]*(1/HRelation)*2.0,ang)
-ax.add_patch(rect)
+rect=Rectangle(RectPosC*(1/HRelation),RectLen[0]*(1/HRelation)*2.0,RectLen[1]*(1/HRelation)*2.0,ang)'''
+
+for xx,yy,H,L,ang in CountryRect:
+    rotAxisH=np.array([np.cos(np.deg2rad(ang)),np.sin(np.deg2rad(ang))])
+    rotAxisL=np.array([-rotAxisH[1],rotAxisH[0]])
+    #RectLen=np.array([H,L])
+    RectCent=np.array([xx,yy])
+    RectPosC=RectCent-(rotAxisH*H)-(rotAxisL*L)
+    rect=Rectangle(RectPosC * (1/HRelation), H * (1/HRelation) * 2.0, L * (1/HRelation) * 2.0, ang)
+    ax.add_patch(rect)
+
+
+#ax.add_patch(rect)
 
 '''print("shape:{}".format(rotAxisH))
 print("shape:{}".format(np.array([rotAxisH,rotAxisL])[0]))'''
 
-rectColi = Rectan(RectCent,ang,RectLen)
-
-
+#rectColi = Rectan(RectCent,ang,RectLen)
 
 # a tk.DrawingArea
 canvas = FigureCanvasTkAgg(fig, master=root)
