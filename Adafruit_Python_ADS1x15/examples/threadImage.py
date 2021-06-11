@@ -1,54 +1,136 @@
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk as NavigationToolbar2TkAgg
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import multiprocessing
+import random
+from tkinter import *
+import numpy as np
+from matplotlib.patches import Circle, Rectangle
+
 from syntacts import *
 from time import sleep, time
 from math import sin
 from math import pi
-
-import Adafruit_ADS1x15
-import csv
-import tensorflow as tf
-from decimal import *
-getcontext().prec = 2
-
-adc = Adafruit_ADS1x15.ADS1015(address=0x49, busnum=1)
-
-GAIN = 1
-
-offset = [0]*4
-offset[0]  = adc.read_adc(0, gain=GAIN)
-offset[1]  = adc.read_adc(1, gain=GAIN)
-offset[2]  = adc.read_adc(2, gain=GAIN)
-offset[3]  = adc.read_adc(3, gain=GAIN)
 
 import numpy as np
 
 s = Session()
 s.open()
 
-# measure wall time
-t0 = time()
-flagT=True
+#Create a window
+root=Tk()
 
-# with myFile:
-#    writer = csv.writer(myFile, dialect='myDialect')
-#    writer.writerows(myData)
-i=0
-#NmeanNew=np.array([408.942958,138.473131,394.008856,308.599539,0.548101,-0.518616])
-#NstadNew=np.array([106.510489,204.268260,128.503499,149.708490,0.429971,0.476176])
+root.wm_title("WHC 2021")
 
-NmeanRest = np.array([326.27320,12.01916,310.34624,222.99996])
+root.image = plt.imread('Recurso 3_1.png')
 
-NmeanNew=np.array([82.669758,126.453971,83.662616,85.599579,311.351552,-0.157280,0.038515])
-NstadNew=np.array([106.510489,204.268260,128.503499,149.708490,179.464143,45.116143,9.908787])
+clickOn=False
 
-print("please don't touch the board!..")
-loaded_model = tf.keras.models.load_model('Models/xyForcePlateN5/')
+Heigth=15.0
+Length=15.0
+radius=1.5
+
+HRelation=Heigth/root.image.shape[0]
+LRelation=Length/root.image.shape[1]
+
+Brazil=[12.0,10.0,3.0]
+Brazil2=[8.2,7.45,2.0]
+Peru=[3.7,9.0,1.7]
+bolivia=[7.0,11.0,1.7]
+colombia=[3.9,5.0,1.5]
+venezuela=[6.4,3.3,1.5]
+paraguai=[8.8,14.0,1.7]
+
+BtnCase=[1.35,10.9,1.4]
+BtnDeath=[1.3,13.6,1.4]
+BtnTotal=[13.7,1.3,1.4]
+BtnMont=[13.7,4.0,1.4]
+Btn20=[5.4,0.0,1.4]
+Btn21=[9.1,0.0,1.4]
+
+Country=[Brazil,Brazil2,Peru, bolivia,colombia,venezuela,paraguai]
+
+RectColVen=[5.0,4.0,1.5,0.5,45.0]
+RectBolBra=[8.0,10.0,1.6,0.5,45.0]
+RectParBra=[9.8,12.6,1.5,0.5,45.0]
+RectPerBra=[5.0,8.5,1.3,0.5,45.0]
+RectPerCol=[3.3,6.7,1.0,0.6,10.0]
+RectColBra=[5.3,6.1,0.8,0.5,-45.0]
+RectPerBol=[5.4,10.2,1.2,0.5,-45.0]
+RectBolPar=[7.9,12.5,0.8,0.5,-45.0]
+RectVezBra=[7.3,4.5,0.8,0.5,-45.0]
+
+CountryRect=[RectColVen,RectBolBra,RectParBra,RectPerBra, RectPerCol, RectColBra, RectPerBol, RectBolPar, RectVezBra]
+
+circ=Circle((0,0),50)
 
 totalTime = 10
 
-Cases_death=True #Cases:True, Death:False
-Total_month=True #Total:True, Month:False
+def on_click(event):
+    #print('click')
+    global clickOn, circ, rectColi
+    if event.inaxes is not None:
+        #print(clickOn)
+        clickOn=True
+        Hreal=event.xdata*HRelation
+        Lreal=event.ydata*LRelation
+        radPix=radius*(1/HRelation)
+#         print ("x:{},y:{}".format(event.x, event.y))
+#         print ("x:{},y:{}".format(event.xdata, event.ydata))
+#         print ("radius:{}".format(radPix))
+#         print ("x:{},y:{}".format(Hreal, Lreal))
+        continent.CollisionDetect(Hreal,Lreal)
+        circ = Circle((int(event.xdata), int(event.ydata)),radPix)
+        ax.add_patch(circ)
+        canvas.draw()        
+        #print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
 
-brazil = Sine(446) * Envelope(totalTime,1)
+        #print("Collison: {}".format(rectColi.collisionDetect(Hreal,Lreal)))
+    
+def off_click(event):
+    global clickOn, circ
+    clickOn=False
+    circ.remove()
+    canvas.draw()    
+
+def on_move(event):
+    if event.inaxes is not None:
+        #print(clickOn)
+        if clickOn==True:
+            Hreal=event.xdata*HRelation
+            Lreal=event.ydata*LRelation
+            continent.CollisionDetect(Hreal,Lreal)
+#             print ("x:{},y:{}".format(event.x, event.y))
+#             print ("x:{},y:{}".format(event.xdata, event.ydata))
+#             print ("x:{},y:{}".format(Hreal, Lreal))
+#             print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
+            
+    '''else:
+        print ('Clicked ouside axes bounds but inside plot window')'''
+
+
+fig = plt.figure()
+#binding_id = plt.connect('motion_notify_event', on_move)
+fig.canvas.callbacks.connect('button_press_event', on_click)
+fig.canvas.callbacks.connect('motion_notify_event', on_move)
+fig.canvas.callbacks.connect('button_release_event', off_click)
+
+global im
+
+im = plt.imshow(root.image) # later use a.set_data(new_data)
+ax = plt.gca()
+ax.set_aspect('equal')
+
+# Now, loop through coord arrays, and create a circle at each x,y pair
+for xx,yy,r in Country:    
+    print("x: {}, y: {},r: {}".format(xx,yy,r))
+    circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation),fill=False)
+    ax.add_patch(circC)
+
+ax.set_xticklabels([]) 
+ax.set_yticklabels([])
 
 class Country:
     def __init__(self, name,x,y,radius,fsom,tsom):
@@ -88,7 +170,7 @@ class Edge:
             return True
         else:
             return False
-
+        
 class Continent:
     # creating list
     def __init__(self):
@@ -157,94 +239,40 @@ class Continent:
                     self.t0=time()
                 #sleep(obj.som.length)
                 return
-                
-                    
-def normNew(x):
-    return ((x - NmeanNew) / NstadNew)
 
-def ratioSxSy(x):
-    try:
-        Sxnum=-(1/x[0])+(1/x[1])+(1/x[2])-(1/x[3])   
-        Synum=-(1/x[0])-(1/x[1])+(1/x[2])+(1/x[3])
-        Sden=(1/x[0])+(1/x[1])+(1/x[2])+(1/x[3])
-        Sx = Sxnum/Sden
-        Sy = Synum/Sden
-        return np.array([Sx,Sy])
-    except:        
-        return np.array([-1,-1])
-    
-def resultCon(x):
-    SxSy = ratioSxSy(x)
-    val=np.concatenate((x,SxSy))
-    return normNew(val)
+for xx,yy,H,L,ang in CountryRect:
+    rotAxisH=np.array([np.cos(np.deg2rad(ang)),np.sin(np.deg2rad(ang))])
+    rotAxisL=np.array([-rotAxisH[1],rotAxisH[0]])
+    #RectLen=np.array([H,L])
+    RectCent=np.array([xx,yy])
+    RectPosC=RectCent-(rotAxisH*H)-(rotAxisL*L)
+    rect=Rectangle(RectPosC * (1/HRelation), H * (1/HRelation) * 2.0, L * (1/HRelation) * 2.0, ang)
+    ax.add_patch(rect)
 
-def lengthVal(x):
-    return np.sqrt(np.sum(np.power(x,2)))
-    
 
-Nmean=5
-values = [0]*4
-mean10=np.empty((Nmean,4)) 
-for j in range(Nmean):
-    for i in range(4):
-        #Read the specified ADC channel using the previously set gain value.
-        values[i] = adc.read_adc(i, gain=GAIN)
-    mean10[j,:]=values
-valInit=np.mean(mean10, axis=0)
+#ax.add_patch(rect)
 
-#dataSqrtInit=lengthVal(resultCon(meanT))
+'''print("shape:{}".format(rotAxisH))
+print("shape:{}".format(np.array([rotAxisH,rotAxisL])[0]))'''
 
-#print("dataSqrtInit: {}".format(dataSqrtInit))
+#rectColi = Rectan(RectCent,ang,RectLen)
 
+# a tk.DrawingArea
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.draw()
+canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
+
+global continent
 continent = Continent()
 
+def main():
+
+    print('hola')
+    print(root.image.shape)
+    root.mainloop()
+    print ('Done')
 
 
-print("Start")
-while True:
-    
-    #mean5=np.empty((Nmean,4)) 
-    #for j in range(Nmean):
-    for i in range(4):
-        #Read the specified ADC channel using the previously set gain value.
-        values[i] = adc.read_adc(i, gain=GAIN)
-    #mean5[j,:]=values
-    #valCur=np.mean(mean5, axis=0)
-
-    ActVal= values-valInit
-    LenVal=lengthVal(ActVal)
-    
-    if (LenVal>200.0 and LenVal<500.0):
-        #res=np.array([ActVal,LenVal])
-        res=np.append(ActVal,LenVal)
-        #print("{}".format(res))
-        resultC=resultCon(res)
-        Pos=loaded_model.predict(resultC.reshape((1,7)))
-        if(Pos[0]>15.0): Pos[0]=15.0
-        if(Pos[1]>15.0): Pos[1]=15.0
-        if(Pos[0]<0.0): Pos[0]=0.0
-        if(Pos[1]<0.0): Pos[1]=0.0
-        continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
-        print("x: {}, y: {}, f:{}".format(float(Pos[0]),float(Pos[1]), LenVal))
-#         print("touch")
-    #elif(LenVal>300.0):
-        #print("forca excessiva")
-    elif(LenVal<50.0):
-        s.stop(0)
-        s.stop(1)
-        s.stop(2)
-        s.stop(3)
-        s.stop(4)
-        s.stop(5)
-        s.stop(6)
-        s.stop(7)
-        continent.t0=time()-continent.timeSom
-        
-    #Unpos=unorm(Pos)
-    #print(Pos)
-#     print(Unpos.shape)
-    #print("x: {}, y: {}".format(float(Pos[0]),float(Pos[1])))
-    
-
-   
-    
+if __name__ == '__main__':
+    main()

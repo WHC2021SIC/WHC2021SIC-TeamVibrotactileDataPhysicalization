@@ -4,7 +4,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import multiprocessing
-import time
 import random
 from tkinter import *
 import numpy as np
@@ -15,7 +14,7 @@ root=Tk()
 
 root.wm_title("WHC 2021")
 
-root.image = plt.imread('Recurso 3.png')
+root.image = plt.imread('Recurso 3_1.png')
 
 clickOn=False
 
@@ -34,10 +33,10 @@ colombia=[3.9,5.0,1.5]
 venezuela=[6.4,3.3,1.5]
 paraguai=[8.8,14.0,1.7]
 
-BtnCase=[0.99,11.24,1.4]
-BtnDeath=[1.35,14.4,1.4]
-BtnGMax=[13.7,0.6,1.4]
-BtnGMin=[13.9,3.8,1.4]
+BtnCase=[1.35,10.9,1.4]
+BtnDeath=[1.3,13.6,1.4]
+BtnTotal=[13.7,1.3,1.4]
+BtnMont=[13.7,4.0,1.4]
 Btn20=[5.4,0.0,1.4]
 Btn21=[9.1,0.0,1.4]
 
@@ -78,7 +77,6 @@ def on_click(event):
 
         #print("Collison: {}".format(rectColi.collisionDetect(Hreal,Lreal)))
     
-
 def off_click(event):
     global clickOn, circ
     clickOn=False
