@@ -3,18 +3,23 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk as NavigationToolbar2TkAgg
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from matplotlib import cm
 import multiprocessing
 import random
 from tkinter import *
 import numpy as np
 from matplotlib.patches import Circle, Rectangle
+from matplotlib.collections import PatchCollection
+from matplotlib import animation
 
 #Create a window
 root=Tk()
 
 root.wm_title("WHC 2021")
+#root.geometry("450x350")
 
-root.image = plt.imread('Recurso 3_1.png')
+image = plt.imread('Recurso 3_1.png') #root.image
+image2 = plt.imread('Actuators.png')
 
 clickOn=False
 
@@ -22,8 +27,8 @@ Heigth=15.0
 Length=15.0
 radius=1.5
 
-HRelation=Heigth/root.image.shape[0]
-LRelation=Length/root.image.shape[1]
+HRelation=Heigth/image.shape[0]
+LRelation=Length/image.shape[1]
 
 Brazil=[12.0,10.0,3.0]
 Brazil2=[8.2,7.45,2.0]
@@ -52,6 +57,8 @@ RectPerBol=[5.4,10.2,1.2,0.5,-45.0]
 RectBolPar=[7.9,12.5,0.8,0.5,-45.0]
 RectVezBra=[7.3,4.5,0.8,0.5,-45.0]
 
+
+
 CountryRect=[RectColVen,RectBolBra,RectParBra,RectPerBra, RectPerCol, RectColBra, RectPerBol, RectBolPar, RectVezBra]
 
 circ=Circle((0,0),50)
@@ -65,23 +72,24 @@ def on_click(event):
         Hreal=event.xdata*HRelation
         Lreal=event.ydata*LRelation
         radPix=radius*(1/HRelation)
-        print ("x:{},y:{}".format(event.x, event.y))
+        #print ("x:{},y:{}".format(event.x, event.y))
         print ("x:{},y:{}".format(event.xdata, event.ydata))
         print ("radius:{}".format(radPix))
         print ("x:{},y:{}".format(Hreal, Lreal))
+        print (image[int(event.ydata), int(event.xdata),:])
         
-        circ = Circle((int(event.xdata), int(event.ydata)),radPix)
+        '''circ = Circle((int(event.xdata), int(event.ydata)),radPix)1
         ax.add_patch(circ)
-        canvas.draw()        
+        canvas.draw()'''
+        
         #print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
-
         #print("Collison: {}".format(rectColi.collisionDetect(Hreal,Lreal)))
     
 def off_click(event):
     global clickOn, circ
     clickOn=False
-    circ.remove()
-    canvas.draw()    
+    '''circ.remove()
+    canvas.draw()'''
 
 def on_move(event):
     if event.inaxes is not None:
@@ -92,31 +100,70 @@ def on_move(event):
             print ("x:{},y:{}".format(event.x, event.y))
             print ("x:{},y:{}".format(event.xdata, event.ydata))
             print ("x:{},y:{}".format(Hreal, Lreal))
-            print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
+            print (image[int(event.ydata), int(event.xdata),:])
+            #print (im.cmap(im.norm(root.image[int(event.ydata), int(event.xdata)])))
     '''else:
         print ('Clicked ouside axes bounds but inside plot window')'''
 
+radi=3.0
+Act0=[24.6, 25.7,radi]
+Act1=[27.2,40.0,radi]
+Act2=[36.6,21.5,radi]
+Act3=[36.8,38.1,radi]
+Act4=[48.3,24.7,radi]
+Act5=[47.8,38.6,radi]
+Act6=[59.1,29.3,radi]
+Act7=[57.2,42.0,radi]
+
+Actuat=[Act0,Act1,Act2,Act3,Act4,Act5,Act6,Act7]
 
 fig = plt.figure()
 #binding_id = plt.connect('motion_notify_event', on_move)
+fig.add_subplot(1, 2, 1)
+plt.imshow(image2)
+
+ax2=plt.gca()
+
+patches = []
+# Now, loop through coord arrays, and create a circle at each x,y pair
+for xx,yy,r in Actuat:    
+    #print("x: {}, y: {},r: {}".format(xx,yy,r))
+    circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation))
+    patches.append(circC)
+
+# add these circles to a collection
+p = PatchCollection(patches, facecolors='r', alpha=0.4)
+ax2.add_collection(p)
+
+'''def animate(i):
+    colors = 100*np.random.rand(len(patches)) # random index to color map
+    p.set_array(np.array(colors)) # set new color colors
+    return p,
+
+ani = animation.FuncAnimation(fig, animate, interval=50)'''
+
+fig.add_subplot(1, 2, 2)
 fig.canvas.callbacks.connect('button_press_event', on_click)
 fig.canvas.callbacks.connect('motion_notify_event', on_move)
 fig.canvas.callbacks.connect('button_release_event', off_click)
 
+
 global im
 
-im = plt.imshow(root.image) # later use a.set_data(new_data)
+im = plt.imshow(image) # later use a.set_data(new_data) image2
+
 ax = plt.gca()
-ax.set_aspect('equal')
+ax.set_xticklabels([]) 
+ax.set_yticklabels([])
+#ax.set_aspect('equal')
 
 # Now, loop through coord arrays, and create a circle at each x,y pair
 for xx,yy,r in Country:    
-    print("x: {}, y: {},r: {}".format(xx,yy,r))
+    #print("x: {}, y: {},r: {}".format(xx,yy,r))
     circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation),fill=False)
     ax.add_patch(circC)
 
-ax.set_xticklabels([]) 
-ax.set_yticklabels([])
+
 
 class Rectan:
     def __init__(self, c,ang,E): 
@@ -178,17 +225,13 @@ canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
 
 
-def rotate(*args):
-    print ('rotate button press...')
-    root.image = ndimage.rotate(root.image, 90)
-    im.set_data(root.image)
-    canvas.draw()
-
+button1=Button(root, text="button1", pady=20, padx=30)
+button1.pack(side=RIGHT)
 
 def main():
 
     print('hola')
-    print(root.image.shape)
+    print(image.shape)
     root.mainloop()
     print ('Done')
 
