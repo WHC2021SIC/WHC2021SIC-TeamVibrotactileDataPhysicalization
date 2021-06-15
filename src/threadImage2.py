@@ -2,7 +2,6 @@ import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk as NavigationToolbar2TkAgg
 import multiprocessing
-import time
 import random
 from tkinter import *
 import numpy as np
@@ -11,6 +10,11 @@ from matplotlib.patches import Circle, Rectangle
 
 from DataManagement import DataManagement
 from ContinentColor import Continent
+
+from syntacts import *
+from time import sleep, time
+from math import sin
+from math import pi
 
 #Create a window
 root=Tk()
@@ -24,44 +28,51 @@ clickOn=False
 xMin=0.4773
 yMin=0.4093
 
-
+s = Session()
+s.open()
 
 continent=Continent()
 
-print(DataManagement.max_min_by_country_by_year('Colombia', 2020))
+#print(DataManagement.max_min_by_country_by_year('Colombia', 2020))
 
 class RenderVibration:
     def __init__(self):
         self.listBefore = 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not'        
         self.MaxGlobal, self.MinGlobal = DataManagement.global_values()
-        self.ValMaxFreq=500
+        self.ValMaxSom=1.0
+        self.som = Sine(450) * Envelope(500)
+        self.t0=time()-self.som.length
+        self.startSom=True
+
 
     def Countrys(self,listCount):
-        #res = [x for x in listCount if x not in self.listBefore]
-        if(Tot_Mounth.get()):
-        
-            res = [count if count != self.listBefore[x] else 'Not' for x,count in enumerate(listCount)]
+        #res = [x for x in listCount if x not in self.listBefore]             
+        res = [count if count != self.listBefore[x] else 'Not' for x,count in enumerate(listCount)]            
+        #print(res)
+        val=False
+        for i in res:
+            if i !='Not':
+                val=True
+        if val:
+            print(listCount)
+            #print("diff")
+            self.ValCountry(res)                
+            self.listBefore = listCount
+            if ((time() - self.t0) >= self.som.length):
+                self.start_all()
+                self.t0=time()
+                print("startSom")
+        '''else:
+            print("equal")'''
 
-            print(res)
-            val=False
-            for i in res:
-                if i !='Not':
-                    val=True
-            if val:
-                #print("diff")
-                self.start(res)
-                self.listBefore = listCount
-            else:
-                print("equal")
-
-    def start(self, listCount):
+    def ValCountry(self, listCount):
         for i,country in enumerate(listCount):
             if(country !='Not'):
                 if country != 'Background':
                     countVal,_=DataManagement.max_min_by_country(country)        
                 else:
                     countVal=0.0
-                ValCountr = countVal * (self.ValMaxFreq / self.MaxGlobal)
+                ValCountr = countVal * (self.ValMaxSom / self.MaxGlobal)
                 #print("Act {}: Country {}, Render: {}".format(i,countVal,ValCountr))
                 self.Actuators(i,ValCountr)
                 
@@ -72,10 +83,29 @@ class RenderVibration:
             ActNum = (Indx - 4) * 2 + 1
         self.render(ActNum, value)
     
-    def render(self,indx,value):        
-        print("Vib {}: Render {}".format(indx,value))
-        
+    def render(self,indx,value):
+        s.set_volume(indx,value)
+        #print("Vib {}: Render {}".format(indx,value))
 
+    def start_all(self):
+        s.play(0, self.som)
+        s.play(1, self.som)
+        s.play(2, self.som)
+        s.play(3, self.som)
+        s.play(4, self.som)
+        s.play(5, self.som)
+        s.play(6, self.som)
+        s.play(7, self.som)
+    
+    def stop_all():
+        s.stop(0)
+        s.stop(1)
+        s.stop(2)
+        s.stop(3)
+        s.stop(4)
+        s.stop(5)
+        s.stop(6)
+        s.stop(7)
 
 
 renderVib = RenderVibration()
@@ -99,10 +129,23 @@ def NearestPixels(PixNow):
                 if(i==0 and j==0):
                     NearCoun.append('Background')    
                     continue
-                NearCoun.append(NearCoun[-1])
-            
+                if(i+j == 4):
+                    NearCoun.append(NearCoun[0])
+                else:
+                    NearCoun.append(NearCoun[-1]) 
     return NearCoun
-    
+
+def listCountry(PixNow):
+        Tou0=image[PixNow[0], PixNow[1],:]
+        Collision,Country=continent.CollisionDetect(Tou0)
+        NearCoun=[]
+        if(Collision):
+            for i in range(8):
+                NearCoun.append(Country)
+        else:    
+            for i in range(8):        
+                NearCoun.append('Background')
+        return NearCoun  
 
 def on_click(event):
     #print('click')
@@ -111,7 +154,12 @@ def on_click(event):
         #print(clickOn)
         clickOn=True        
         t01=[int(event.ydata+yMin), int(event.xdata+xMin)]
-        NearCoun=NearestPixels(t01)
+
+        if(Tot_Mounth.get()):
+            NearCoun=NearestPixels(t01)
+        else:
+            NearCoun=listCountry(t01)
+
         renderVib.Countrys(NearCoun)
         #print(NearCoun)
 
@@ -125,7 +173,8 @@ def on_move(event):
         if clickOn==True:
             t01=[int(event.ydata+yMin), int(event.xdata+xMin)]
             NearCoun=NearestPixels(t01)
-            print(NearCoun)
+            renderVib.Countrys(NearCoun)
+            #print(NearCoun)
 
 
 def ActDeath():
@@ -152,7 +201,8 @@ def plot():    #Function to create the base plot, make sure to make global the l
 
     Death_Cas=IntVar()
     c = Checkbutton(root, text = "On:Death/Off:Cases", variable=Death_Cas, justify=LEFT).pack(side=LEFT)
-    
+    Death_Cas.set(True)
+
     Tot_Mounth=IntVar()
     c2 = Checkbutton(root, text = "On:Total/Off:Mounthoy", variable=Tot_Mounth, justify=LEFT).pack(side=RIGHT)
     Tot_Mounth.set(True)
