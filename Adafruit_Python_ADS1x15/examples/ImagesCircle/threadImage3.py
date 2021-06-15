@@ -18,7 +18,7 @@ root=Tk()
 root.wm_title("WHC 2021")
 #root.geometry("450x350")
 
-image = plt.imread('Recurso 3_1.png') #root.image
+image = plt.imread('sudamericaLowRes.png') #root.image
 image2 = plt.imread('Actuators.png')
 
 clickOn=False
@@ -29,6 +29,9 @@ radius=1.5
 
 HRelation=Heigth/image.shape[0]
 LRelation=Length/image.shape[1]
+
+HRelationAct=1.0/image2.shape[0]
+LRelationAct=1.0/image2.shape[1]
 
 Brazil=[12.0,10.0,3.0]
 Brazil2=[8.2,7.45,2.0]
@@ -57,27 +60,34 @@ RectPerBol=[5.4,10.2,1.2,0.5,-45.0]
 RectBolPar=[7.9,12.5,0.8,0.5,-45.0]
 RectVezBra=[7.3,4.5,0.8,0.5,-45.0]
 
-
-
 CountryRect=[RectColVen,RectBolBra,RectParBra,RectPerBra, RectPerCol, RectColBra, RectPerBol, RectBolPar, RectVezBra]
 
 circ=Circle((0,0),50)
+xMin=0.4773
+yMin=0.4093
 
 def on_click(event):
     #print('click')
-    global clickOn, circ, rectColi
+    global clickOn, circ, p
     if event.inaxes is not None:
         #print(clickOn)
         clickOn=True
-        Hreal=event.xdata*HRelation
-        Lreal=event.ydata*LRelation
-        radPix=radius*(1/HRelation)
-        #print ("x:{},y:{}".format(event.x, event.y))
-        print ("x:{},y:{}".format(event.xdata, event.ydata))
-        print ("radius:{}".format(radPix))
-        print ("x:{},y:{}".format(Hreal, Lreal))
-        print (image[int(event.ydata), int(event.xdata),:])
+        Hreal=event.xdata*HRelationAct
+        Lreal=event.ydata*LRelationAct
+        #radPix=radius*(1/LRelationAct)
         
+        #print ("x:{},y:{}".format(event.x, event.y))
+
+        colors = 100*np.random.rand(len(patches)) # random index to color map
+        p.set_array(np.array(colors))
+        
+        print ("x:{},y:{}".format(event.xdata + xMin, event.ydata+ yMin))
+        #print ("radius:{}".format(radPix))
+        print ("x:{},y:{}".format(Hreal, Lreal))
+        print (image[int(event.ydata+yMin), int(event.xdata+xMin),:])
+        
+
+
         '''circ = Circle((int(event.xdata), int(event.ydata)),radPix)1
         ax.add_patch(circ)
         canvas.draw()'''
@@ -105,15 +115,15 @@ def on_move(event):
     '''else:
         print ('Clicked ouside axes bounds but inside plot window')'''
 
-radi=3.0
-Act0=[24.6, 25.7,radi]
-Act1=[27.2,40.0,radi]
-Act2=[36.6,21.5,radi]
-Act3=[36.8,38.1,radi]
-Act4=[48.3,24.7,radi]
-Act5=[47.8,38.6,radi]
-Act6=[59.1,29.3,radi]
-Act7=[57.2,42.0,radi]
+radi=90
+Act0=[0.265,0.41,radi]
+Act1=[0.295,0.64,radi]
+Act2=[0.395,0.34,radi]
+Act3=[0.395,0.61,radi]
+Act4=[0.52,0.39,radi]
+Act5=[0.515,0.62,radi]
+Act6=[0.635,0.47,radi]
+Act7=[0.615,0.67,radi]
 
 Actuat=[Act0,Act1,Act2,Act3,Act4,Act5,Act6,Act7]
 
@@ -128,7 +138,7 @@ patches = []
 # Now, loop through coord arrays, and create a circle at each x,y pair
 for xx,yy,r in Actuat:    
     #print("x: {}, y: {},r: {}".format(xx,yy,r))
-    circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation))
+    circC = Circle((xx*(1/HRelationAct),yy*(1/LRelationAct)),r)
     patches.append(circC)
 
 # add these circles to a collection
@@ -147,22 +157,8 @@ fig.canvas.callbacks.connect('button_press_event', on_click)
 fig.canvas.callbacks.connect('motion_notify_event', on_move)
 fig.canvas.callbacks.connect('button_release_event', off_click)
 
-
 global im
-
 im = plt.imshow(image) # later use a.set_data(new_data) image2
-
-ax = plt.gca()
-ax.set_xticklabels([]) 
-ax.set_yticklabels([])
-#ax.set_aspect('equal')
-
-# Now, loop through coord arrays, and create a circle at each x,y pair
-for xx,yy,r in Country:    
-    #print("x: {}, y: {},r: {}".format(xx,yy,r))
-    circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation),fill=False)
-    ax.add_patch(circC)
-
 
 
 class Rectan:
@@ -189,17 +185,16 @@ class Rectan:
             return False
 
 
-'''ang=45.0
-rotAxisH=np.array([np.cos(np.deg2rad(ang)),np.sin(np.deg2rad(ang))])
-rotAxisL=np.array([-rotAxisH[1],rotAxisH[0]])
-RectLen=np.array([2.0,1.5])
-RectCent=np.array([3.9,5.0])
+'''ax = plt.gca()
+ax.set_xticklabels([]) 
+ax.set_yticklabels([])
+#ax.set_aspect('equal')
 
-RectPosC=RectCent-(rotAxisH*RectLen[0])-(rotAxisL*RectLen[1])
-
-print("RectC:{}".format(RectPosC))
-
-rect=Rectangle(RectPosC*(1/HRelation),RectLen[0]*(1/HRelation)*2.0,RectLen[1]*(1/HRelation)*2.0,ang)'''
+# Now, loop through coord arrays, and create a circle at each x,y pair
+for xx,yy,r in Country:    
+    #print("x: {}, y: {},r: {}".format(xx,yy,r))
+    circC = Circle((xx*(1/HRelation),yy*(1/HRelation)),r*(1/HRelation),fill=False)
+    ax.add_patch(circC)
 
 for xx,yy,H,L,ang in CountryRect:
     rotAxisH=np.array([np.cos(np.deg2rad(ang)),np.sin(np.deg2rad(ang))])
@@ -208,7 +203,7 @@ for xx,yy,H,L,ang in CountryRect:
     RectCent=np.array([xx,yy])
     RectPosC=RectCent-(rotAxisH*H)-(rotAxisL*L)
     rect=Rectangle(RectPosC * (1/HRelation), H * (1/HRelation) * 2.0, L * (1/HRelation) * 2.0, ang)
-    ax.add_patch(rect)
+    ax.add_patch(rect)'''
 
 
 #ax.add_patch(rect)

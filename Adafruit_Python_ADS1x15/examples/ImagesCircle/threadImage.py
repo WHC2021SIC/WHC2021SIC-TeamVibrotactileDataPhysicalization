@@ -19,11 +19,16 @@ def simulation(q):
             q.put(random.randint(1,10))
     q.put('Q')
 
+def on_click(event):
+    if event.inaxes is not None:
+        print ("x:{},y:{}".format(event.x, event.y))
+    else:
+        print ('Clicked ouside axes bounds but inside plot window')
 
 def plot():    #Function to create the base plot, make sure to make global the lines, axes, canvas and any part that you would want to update later
     global line,ax,canvas
     fig = matplotlib.figure.Figure()
-    fig.canvas.callbacks.connect('button_press_event', on_click)
+    fig.canvas.callbacks.connect('motion_notify_event', on_click)
     ax = fig.add_subplot()
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.draw()
@@ -32,17 +37,11 @@ def plot():    #Function to create the base plot, make sure to make global the l
     line, = ax.plot([1,2,3], [1,2,10])
 
 
-def on_click(event):
-    if event.inaxes is not None:
-        print ("x:{},y:{}".format(event.x, event.y))
-    else:
-        print ('Clicked ouside axes bounds but inside plot window')
-
 
 def updateplot(q):
     try:       #Try to check if there is data in the queue
         result=q.get_nowait()
-
+        global line,ax,canvas
         if result !='Q':
              print ("R: {}".format(result))
                  #here get crazy with the plotting, you have access to all the global variables that you defined in the plot function, and have the data that the simulation sent.
@@ -61,7 +60,7 @@ def main():
     q = multiprocessing.Queue()
 
     #Create and start the simulation process
-    simulate=multiprocessing.Process(None,simulation,args=(q,))
+    simulate=multiprocessing.Process(Target=simulation,args=(q,))
     simulate.start()
 
     #Create the base plot
