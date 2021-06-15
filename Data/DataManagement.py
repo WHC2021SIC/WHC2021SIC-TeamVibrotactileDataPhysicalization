@@ -26,6 +26,12 @@ class DataManagement:
             return data[country].max(), data[country].min()
         else:
             return []
+    def max_min_by_country_by_year(country,year):
+        '''return max and min value by country'''
+        if year in data.Year.values:
+            return data.loc[data["Year"] == year][country].max(), data.loc[data["Year"] == year][country].min()
+        else:
+            return []
 
 
 
@@ -35,6 +41,6 @@ DataManagement.get_data_contry('Peru')
 DataManagement.get_data_contry('aeru')
 DataManagement.get_data_contry('Brazil')
 DataManagement.get_data_contry('Colombia')
-DataManagement.get_data_contry_by_year('Colombia', 2020)
-print(DataManagement.global_values())
+print(DataManagement.max_min_by_country_by_year('Colombia', 2020))
+#print(DataManagement.global_values())
 print(DataManagement.max_min_by_country('Peru'))
