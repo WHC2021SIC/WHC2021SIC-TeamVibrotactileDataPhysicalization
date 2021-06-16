@@ -61,10 +61,6 @@ def rgbtohex(rgb):
     return f'#{r:02x}{g:02x}{b:02x}'
 
 def renderSensorScreen(Tou):
-    
-    # canvasTest = Canvas(sensor, width=400, height=400, borderwidth=0, highlightthickness=0)
-    # canvasTest.grid()
-    # canvasTest.create_circle = _create_circle
 
     sensor1 = canvasTest.create_circle(canvasTest, 50, 50, 50, fill=rgbtohex(Tou[0][0]), outline="#DDD", width=4)
     sensor2 = canvasTest.create_circle(canvasTest, 150, 50, 50, fill=rgbtohex(Tou[0][1]), outline="#DDD", width=4)
