@@ -51,7 +51,7 @@ def rgbtohex(rgb):
     return f'#{r:02x}{g:02x}{b:02x}'
 
 def renderSensorScreen(Tou, radius):
-    print(radius)
+    #print(radius)
     sensor1 = canvasTest.create_circle(canvasTest, 55, 55, radius[0]+1.5, fill=rgbtohex(Tou[0][0]), outline="#DDD", width=0)
     sensor2 = canvasTest.create_circle(canvasTest, 165, 55, radius[1]+1.5, fill=rgbtohex(Tou[0][1]), outline="#DDD", width=0)
     sensor3 = canvasTest.create_circle(canvasTest, 275, 55, radius[2]+1.5, fill=rgbtohex(Tou[0][2]), outline="#DDD", width=0)
@@ -85,7 +85,7 @@ class RenderVibration:
             if i !='Not':
                 val=True
         if val:
-            print(listCount)
+            #print(listCount)
             #print("diff")
             self.ValCountry(res)
             self.listBefore = listCount
@@ -167,7 +167,7 @@ def ModeMonth(PixNow):
         if renderVib.countryBefore == countryPix:
             return
         renderVib.countryBefore = countryPix
-        print(countryPix)
+        #print(countryPix)
         listMonth=[]
         if(Death_Cas):
             listMonth=DataManagement.get_data_contry_by_year(countryPix, 2020)
@@ -187,7 +187,7 @@ def simMonth(listMonth,MaxMonth):
         valCurr=listMonth[renderVib.MontCount]
         ValCountr = valCurr * (renderVib.ValMaxSom / MaxMonth)
         renderVib.render_all(ValCountr)
-        print("mes: {} : {}".format(renderVib.MontCount, ValCountr))        
+        #print("mes: {} : {}".format(renderVib.MontCount, ValCountr))        
         root.after(renderVib.TimeMont,simMonth,listMonth,MaxMonth)
     else:
         renderVib.stop_all()
@@ -247,7 +247,6 @@ def reset_all():
     renderVib.MontCount=0
     renderVib.countryBefore='Not'
 
-
 def on_click(event):
     #print('click')
     global clickOn, circ
@@ -280,12 +279,15 @@ def on_move(event):
             #print(NearCoun)
 
 
-def ActDeath():
-    print("death")
-    
+def Btn20_21():
+    global AnoData
+    if B20_B21:
+        AnoData=2021
+    else:
+        AnoData=2020
 
 def plot():    #Function to create the base plot, make sure to make global the lines, axes, canvas and any part that you would want to update later
-    global Death_Cas, Tot_Mounth
+    global Death_Cas, Tot_Mounth, B20_B21
         
     #fig.add_subplot(1, 2, 2)
     fig2 = plt.figure()    
@@ -309,6 +311,10 @@ def plot():    #Function to create the base plot, make sure to make global the l
     Tot_Mounth=IntVar()
     c2 = Checkbutton(root, text = "On:Total/Off:Monthly", variable=Tot_Mounth, justify=LEFT).pack(side=RIGHT)
     Tot_Mounth.set(True)
+    
+    B20_B21=IntVar()
+    c3 = Checkbutton(root, text = "On:2021/Off:2020", variable=B20_B21, command=Btn20_21,justify=LEFT).pack(side=TOP)
+    B20_B21.set(True)
 
 
 def main():
