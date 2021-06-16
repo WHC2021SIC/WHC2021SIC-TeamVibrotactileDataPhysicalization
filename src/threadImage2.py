@@ -21,22 +21,12 @@ root=Tk()
 
 sensor = Tk()
 sensor.title("Sensors")
-canvasTest = Canvas(sensor, width=400, height=400, borderwidth=0, highlightthickness=0)
+canvasTest = Canvas(sensor, width=450, height=230, borderwidth=0, highlightthickness=0)
 canvasTest.grid()
-
 
 def _create_circle(self, x, y, r, **kwargs):
     return self.create_oval(x-r, y-r, x+r, y+r, **kwargs)
 canvasTest.create_circle = _create_circle
-
-sensor1 = canvasTest.create_circle(canvasTest, 50, 50, 50, fill="blue", outline="#DDD", width=4)
-sensor2 = canvasTest.create_circle(canvasTest, 150, 50, 50, fill="blue", outline="#DDD", width=4)
-sensor3 = canvasTest.create_circle(canvasTest, 250, 50, 50, fill="blue", outline="#DDD", width=4)
-sensor4 = canvasTest.create_circle(canvasTest, 350, 50, 50, fill="blue", outline="#DDD", width=4)
-sensor5 = canvasTest.create_circle(canvasTest, 50, 150, 50, fill="blue", outline="#DDD", width=4)
-sensor6 = canvasTest.create_circle(canvasTest, 150, 150, 50, fill="blue", outline="#DDD", width=4)
-sensor7 = canvasTest.create_circle(canvasTest, 250, 150, 50, fill="blue", outline="#DDD", width=4)
-sensor8 = canvasTest.create_circle(canvasTest, 350, 150, 50, fill="blue", outline="#DDD", width=4)
 
 root.wm_title("WHC 2021")
 #root.geometry("450x350")
@@ -60,20 +50,16 @@ def rgbtohex(rgb):
     b = int(rgb[2]*255)
     return f'#{r:02x}{g:02x}{b:02x}'
 
-def renderSensorScreen(Tou):
-    
-    # canvasTest = Canvas(sensor, width=400, height=400, borderwidth=0, highlightthickness=0)
-    # canvasTest.grid()
-    # canvasTest.create_circle = _create_circle
-
-    sensor1 = canvasTest.create_circle(canvasTest, 50, 50, 50, fill=rgbtohex(Tou[0][0]), outline="#DDD", width=4)
-    sensor2 = canvasTest.create_circle(canvasTest, 150, 50, 50, fill=rgbtohex(Tou[0][1]), outline="#DDD", width=4)
-    sensor3 = canvasTest.create_circle(canvasTest, 250, 50, 50, fill=rgbtohex(Tou[0][2]), outline="#DDD", width=4)
-    sensor4 = canvasTest.create_circle(canvasTest, 350, 50, 50, fill=rgbtohex(Tou[0][3]), outline="#DDD", width=4)
-    sensor5 = canvasTest.create_circle(canvasTest, 50, 150, 50, fill=rgbtohex(Tou[1][0]), outline="#DDD", width=4)
-    sensor6 = canvasTest.create_circle(canvasTest, 150, 150, 50, fill=rgbtohex(Tou[1][1]), outline="#DDD", width=4)
-    sensor7 = canvasTest.create_circle(canvasTest, 250, 150, 50, fill=rgbtohex(Tou[1][2]), outline="#DDD", width=4)
-    sensor8 = canvasTest.create_circle(canvasTest, 350, 150, 50, fill=rgbtohex(Tou[1][3]), outline="#DDD", width=4)
+def renderSensorScreen(Tou, radius):
+    print(radius)
+    sensor1 = canvasTest.create_circle(canvasTest, 55, 55, radius[0]+1.5, fill=rgbtohex(Tou[0][0]), outline="#DDD", width=0)
+    sensor2 = canvasTest.create_circle(canvasTest, 165, 55, radius[1]+1.5, fill=rgbtohex(Tou[0][1]), outline="#DDD", width=0)
+    sensor3 = canvasTest.create_circle(canvasTest, 275, 55, radius[2]+1.5, fill=rgbtohex(Tou[0][2]), outline="#DDD", width=0)
+    sensor4 = canvasTest.create_circle(canvasTest, 385, 55, radius[3]+1.5, fill=rgbtohex(Tou[0][3]), outline="#DDD", width=0)
+    sensor5 = canvasTest.create_circle(canvasTest, 55, 165, radius[4]+1.5, fill=rgbtohex(Tou[1][0]), outline="#DDD", width=0)
+    sensor6 = canvasTest.create_circle(canvasTest, 165, 165, radius[5]+1.5, fill=rgbtohex(Tou[1][1]), outline="#DDD", width=0)
+    sensor7 = canvasTest.create_circle(canvasTest, 275, 165, radius[6]+1.5, fill=rgbtohex(Tou[1][2]), outline="#DDD", width=0)
+    sensor8 = canvasTest.create_circle(canvasTest, 385, 165, radius[7]+1.5, fill=rgbtohex(Tou[1][3]), outline="#DDD", width=0)
 
 class RenderVibration:
     def __init__(self):
@@ -87,10 +73,12 @@ class RenderVibration:
         self.TimeMont=1000
         self.modeMonth=True
         self.MontCount=0
+        self.listRadius=[0]*8
+        self.radiusMax=50.0
 
     def Countrys(self,listCount):
         #res = [x for x in listCount if x not in self.listBefore]             
-        res = [count if count != self.listBefore[x] else 'Not' for x,count in enumerate(listCount)]            
+        res = [count if count != self.listBefore[x] else 'Not' for x,count in enumerate(listCount)]
         #print(res)
         val=False
         for i in res:
@@ -105,6 +93,7 @@ class RenderVibration:
                 self.start_all()
                 self.t0=time()
                 #print("startSom")
+                
 
     def ValCountry(self, listCount):
         for i,country in enumerate(listCount):
@@ -119,8 +108,11 @@ class RenderVibration:
                         MaxG=self.MaxGlobalCases
                 else:
                     countVal=0.0
+
                 ValCountr = countVal * (self.ValMaxSom / MaxG)
+                self.listRadius[i] = countVal * (self.radiusMax / MaxG)
                 #print("Act {}: Country {}, Render: {}".format(i,countVal,ValCountr))
+
                 self.Actuators(i,ValCountr)
                 
     def Actuators(self,Indx,value):        
@@ -203,8 +195,11 @@ def simMonth(listMonth,MaxMonth):
     renderVib.MontCount += 1
 
 def ModeTotal(PixNow):
-    NearCoun=NearestPixels(PixNow)
+    NearCoun,colors=NearestPixels(PixNow)
     renderVib.Countrys(NearCoun)
+    canvasTest.delete("all")
+    renderSensorScreen(colors,renderVib.listRadius)
+    
     
 
 def NearestPixels(PixNow):
@@ -234,10 +229,7 @@ def NearestPixels(PixNow):
                 else:
                     NearCoun.append(NearCoun[-1]) 
     
-    canvasTest.delete("all")
-    renderSensorScreen(colors)
-
-    return NearCoun
+    return NearCoun,colors
 
 
 def CountryPix(PixNow):
