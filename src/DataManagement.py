@@ -52,6 +52,10 @@ class DataManagement:
         '''return max and min global, but min general is 0'''
         tmp = [data_case.Argentina.sum(), data_case.Bolivia.sum(), data_case.Brazil.sum(), data_case.Chile.sum(), data_case.Colombia.sum(), data_case.Ecuador.sum(), data_case.Guyana.sum(), data_case.Paraguay.sum(), data_case.Peru.sum(), data_case.Suriname.sum(), data_case.Uruguay.sum(), data_case.Venezuela.sum()]
         return max(tmp), min(tmp);
+    
+    def get_case_sum_country(country):
+        return data_case[country].sum()
+    
     def max_min_case_by_country(country):
         '''return max and min value by country'''
         if country in data_case:

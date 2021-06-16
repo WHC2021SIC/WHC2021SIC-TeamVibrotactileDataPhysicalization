@@ -80,6 +80,7 @@ class RenderVibration:
         self.listBefore = 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not'
         self.countryBefore ='Not'
         self.MaxGlobal, self.MinGlobal = DataManagement.global_values()
+        self.MaxGlobalCases, self.MinGlobalCases = DataManagement.global_case_values()
         self.ValMaxSom=1.0
         self.som = Sine(450) * Envelope(500)
         self.t0=time()-self.som.length
@@ -108,11 +109,17 @@ class RenderVibration:
     def ValCountry(self, listCount):
         for i,country in enumerate(listCount):
             if(country !='Not'):
+                MaxG=1
                 if country != 'Background':
-                    countVal=DataManagement.get_sum_country(country)
+                    if Death_Cas.get():
+                        countVal=DataManagement.get_sum_country(country)
+                        MaxG=self.MaxGlobal
+                    else:
+                        countVal=DataManagement.get_case_sum_country(country)
+                        MaxG=self.MaxGlobalCases
                 else:
                     countVal=0.0
-                ValCountr = countVal * (self.ValMaxSom / self.MaxGlobal)
+                ValCountr = countVal * (self.ValMaxSom / MaxG)
                 #print("Act {}: Country {}, Render: {}".format(i,countVal,ValCountr))
                 self.Actuators(i,ValCountr)
                 
@@ -169,8 +176,13 @@ def ModeMonth(PixNow):
             return
         renderVib.countryBefore = countryPix
         print(countryPix)
-        listMonth=DataManagement.get_data_contry_by_year(countryPix, 2020)
-        MaxMonth,_=DataManagement.max_min_by_country_by_year(countryPix, 2020)
+        listMonth=[]
+        if(Death_Cas):
+            listMonth=DataManagement.get_data_contry_by_year(countryPix, 2020)
+            MaxMonth,_=DataManagement.max_min_by_country_by_year(countryPix, 2020)
+        else:
+            listMonth=DataManagement.get_data_case_contry_by_year(countryPix, 2020)
+            MaxMonth,_=DataManagement.max_min_case_by_country_by_year(countryPix, 2020)
         simMonth(listMonth,MaxMonth)
         renderVib.start_all()
     else:
