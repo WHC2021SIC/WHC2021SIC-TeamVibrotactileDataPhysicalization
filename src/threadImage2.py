@@ -19,6 +19,25 @@ from math import pi
 #Create a window
 root=Tk()
 
+sensor = Tk()
+sensor.title("Sensors")
+canvasTest = Canvas(sensor, width=400, height=400, borderwidth=0, highlightthickness=0)
+canvasTest.grid()
+
+
+def _create_circle(self, x, y, r, **kwargs):
+    return self.create_oval(x-r, y-r, x+r, y+r, **kwargs)
+canvasTest.create_circle = _create_circle
+
+sensor1 = canvasTest.create_circle(canvasTest, 50, 50, 50, fill="blue", outline="#DDD", width=4)
+sensor2 = canvasTest.create_circle(canvasTest, 150, 50, 50, fill="blue", outline="#DDD", width=4)
+sensor3 = canvasTest.create_circle(canvasTest, 250, 50, 50, fill="blue", outline="#DDD", width=4)
+sensor4 = canvasTest.create_circle(canvasTest, 350, 50, 50, fill="blue", outline="#DDD", width=4)
+sensor5 = canvasTest.create_circle(canvasTest, 50, 150, 50, fill="blue", outline="#DDD", width=4)
+sensor6 = canvasTest.create_circle(canvasTest, 150, 150, 50, fill="blue", outline="#DDD", width=4)
+sensor7 = canvasTest.create_circle(canvasTest, 250, 150, 50, fill="blue", outline="#DDD", width=4)
+sensor8 = canvasTest.create_circle(canvasTest, 350, 150, 50, fill="blue", outline="#DDD", width=4)
+
 root.wm_title("WHC 2021")
 #root.geometry("450x350")
 
@@ -34,6 +53,27 @@ s.open()
 continent=Continent()
 
 #print(DataManagement.max_min_by_country_by_year('Colombia', 2020))
+
+def rgbtohex(rgb):
+    r = int(rgb[0]*255)
+    g = int(rgb[1]*255)
+    b = int(rgb[2]*255)
+    return f'#{r:02x}{g:02x}{b:02x}'
+
+def renderSensorScreen(Tou):
+    
+    # canvasTest = Canvas(sensor, width=400, height=400, borderwidth=0, highlightthickness=0)
+    # canvasTest.grid()
+    # canvasTest.create_circle = _create_circle
+
+    sensor1 = canvasTest.create_circle(canvasTest, 50, 50, 50, fill=rgbtohex(Tou[0][0]), outline="#DDD", width=4)
+    sensor2 = canvasTest.create_circle(canvasTest, 150, 50, 50, fill=rgbtohex(Tou[0][1]), outline="#DDD", width=4)
+    sensor3 = canvasTest.create_circle(canvasTest, 250, 50, 50, fill=rgbtohex(Tou[0][2]), outline="#DDD", width=4)
+    sensor4 = canvasTest.create_circle(canvasTest, 350, 50, 50, fill=rgbtohex(Tou[0][3]), outline="#DDD", width=4)
+    sensor5 = canvasTest.create_circle(canvasTest, 50, 150, 50, fill=rgbtohex(Tou[1][0]), outline="#DDD", width=4)
+    sensor6 = canvasTest.create_circle(canvasTest, 150, 150, 50, fill=rgbtohex(Tou[1][1]), outline="#DDD", width=4)
+    sensor7 = canvasTest.create_circle(canvasTest, 250, 150, 50, fill=rgbtohex(Tou[1][2]), outline="#DDD", width=4)
+    sensor8 = canvasTest.create_circle(canvasTest, 350, 150, 50, fill=rgbtohex(Tou[1][3]), outline="#DDD", width=4)
 
 class RenderVibration:
     def __init__(self):
@@ -158,6 +198,7 @@ def ModeTotal(PixNow):
 def NearestPixels(PixNow):
     t0=[0]*2
     NearCoun=[]
+    colors = [[0,0,0,0],[0,0,0,0]]
     for i in range(2):
         for j in range(4):
             t0[0]=PixNow[0]+i
@@ -166,6 +207,9 @@ def NearestPixels(PixNow):
                 NearCoun.append("Out")
                 continue
             Tou0=image[t0[0], t0[1],:]
+
+            colors[i][j] = Tou0
+
             Collision,Country=continent.CollisionDetect(Tou0)
             if(Collision):
                 NearCoun.append(Country)
@@ -176,7 +220,11 @@ def NearestPixels(PixNow):
                 if(i+j == 4):
                     NearCoun.append(NearCoun[0])
                 else:
-                    NearCoun.append(NearCoun[-1])
+                    NearCoun.append(NearCoun[-1]) 
+    
+    canvasTest.delete("all")
+    renderSensorScreen(colors)
+
     return NearCoun
 
 
