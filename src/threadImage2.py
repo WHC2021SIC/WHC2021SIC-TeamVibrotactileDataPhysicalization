@@ -42,8 +42,9 @@ class RenderVibration:
         self.ValMaxSom=1.0
         self.som = Sine(450) * Envelope(500)
         self.t0=time()-self.som.length
-        self.startSom=True
-
+        self.TimeMont=500
+        self.modeMonth=True
+        self.MontCount=0
 
     def Countrys(self,listCount):
         #res = [x for x in listCount if x not in self.listBefore]             
@@ -56,14 +57,13 @@ class RenderVibration:
         if val:
             print(listCount)
             #print("diff")
-            self.ValCountry(res)                
+            self.ValCountry(res)
             self.listBefore = listCount
             if ((time() - self.t0) >= self.som.length):
                 self.start_all()
                 self.t0=time()
-                print("startSom")
-        '''else:
-            print("equal")'''
+                #print("startSom")
+
 
     def ValCountry(self, listCount):
         for i,country in enumerate(listCount):
@@ -97,7 +97,7 @@ class RenderVibration:
         s.play(6, self.som)
         s.play(7, self.som)
     
-    def stop_all():
+    def stop_all(self):
         s.stop(0)
         s.stop(1)
         s.stop(2)
@@ -106,9 +106,45 @@ class RenderVibration:
         s.stop(5)
         s.stop(6)
         s.stop(7)
+        self.t0 = time()-self.som.length
+        self.listBefore = 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not'
+        self.MontCount = 0
+    
+    def render_all(self,value):
+        s.set_volume(0,value)
+        s.set_volume(1,value)
+        s.set_volume(2,value)
+        s.set_volume(3,value)
+        s.set_volume(4,value)
+        s.set_volume(5,value)
+        s.set_volume(6,value)
+        s.set_volume(7,value)
 
 
 renderVib = RenderVibration()
+
+def ModeMonth(PixNow):
+    countryPix=CountryPix(PixNow)
+    if countryPix!='Background':
+        print(countryPix)
+        listMonth=DataManagement.get_data_contry_by_year(countryPix, 2020)
+        simMonth(listMonth)
+        
+
+def simMonth(listMonth):    
+    if(renderVib.MontCount<len(listMonth) and clickOn):
+        #ValCountr = countVal * (self.ValMaxSom / self.MaxGlobal)
+        #renderVib.render_all(ValCountr)
+        print("mes: {} : {}".format(renderVib.MontCount, listMonth[renderVib.MontCount]))        
+        root.after(renderVib.TimeMont,simMonth,listMonth)
+    else:
+        renderVib.MontCount=0
+        return
+    renderVib.MontCount += 1
+
+def ModeTotal(PixNow):
+    NearCoun=NearestPixels(PixNow)
+    renderVib.Countrys(NearCoun)
 
 
 def NearestPixels(PixNow):
@@ -135,16 +171,14 @@ def NearestPixels(PixNow):
                     NearCoun.append(NearCoun[-1]) 
     return NearCoun
 
-def listCountry(PixNow):
+def CountryPix(PixNow):
         Tou0=image[PixNow[0], PixNow[1],:]
         Collision,Country=continent.CollisionDetect(Tou0)
         NearCoun=[]
-        if(Collision):
-            for i in range(8):
-                NearCoun.append(Country)
-        else:    
-            for i in range(8):        
-                NearCoun.append('Background')
+        if(Collision):            
+            NearCoun=Country
+        else:                   
+            NearCoun='Background'
         return NearCoun  
 
 def on_click(event):
@@ -156,16 +190,17 @@ def on_click(event):
         t01=[int(event.ydata+yMin), int(event.xdata+xMin)]
 
         if(Tot_Mounth.get()):
-            NearCoun=NearestPixels(t01)
-        else:
-            NearCoun=listCountry(t01)
-
-        renderVib.Countrys(NearCoun)
+            ModeTotal(t01)
+        else:            
+            ModeMonth(t01)
+        
         #print(NearCoun)
 
 def off_click(event):
     global clickOn, circ
     clickOn=False
+    renderVib.stop_all()
+    renderVib.MontCount=0
 
 def on_move(event):
     if event.inaxes is not None:
@@ -209,6 +244,7 @@ def plot():    #Function to create the base plot, make sure to make global the l
 
 
 def main():
+
     #Create the base plot
     plot()
     print('Start...')

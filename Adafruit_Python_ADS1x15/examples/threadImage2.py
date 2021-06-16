@@ -12,7 +12,6 @@ from matplotlib.collections import PatchCollection
 from matplotlib.animation import FuncAnimation
 
 
-
 #Create a window
 root=Tk()
 
