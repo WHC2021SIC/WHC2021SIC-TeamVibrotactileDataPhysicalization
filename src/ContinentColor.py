@@ -1,4 +1,5 @@
 import numpy as np
+from syntacts import Library
 
 #dataset colors of image sudamericaLowRes.png
 ColColombia=[1., 0.56863, 0., 1.]
@@ -58,3 +59,38 @@ class Continent:
                 return True, obj.name
         if(col==-1):
             return False,-1
+
+# Function to make sure export/import works
+def check(signal):
+    if signal is not None:
+        print('Pass')
+    else:
+        print('Fail') 
+
+Jan = Library.import_signal('months/jan.wav')
+Feb = Library.import_signal('months/feb.wav')
+Mar = Library.import_signal('months/mar.wav')
+Apr = Library.import_signal('months/apr.wav')
+May = Library.import_signal('months/may.wav')
+Jun = Library.import_signal('months/jun.wav')
+Jul = Library.import_signal('months/jul.wav')
+Aug = Library.import_signal('months/aug.wav')
+Sep = Library.import_signal('months/sep.wav')
+Oct = Library.import_signal('months/oct.wav')
+Nov = Library.import_signal('months/nov.wav')
+Dec = Library.import_signal('months/dec.wav')
+
+'''check(Jan)
+check(Feb)
+check(Mar)
+check(Apr)
+check(May)
+check(Jun)
+check(Jul)
+check(Aug)
+check(Sep)
+check(Oct)
+check(Nov)
+check(Dec)'''
+
+MonthsAudio=[Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec ]

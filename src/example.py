@@ -6,11 +6,18 @@ from math import pi
 s = Session()
 s.open()
 
+# Function to make sure export/import works
+def check(signal):
+    if signal is not None:
+        print('Pass')
+    else:
+        print('Fail') 
+
 x = Sine(440) * Triangle(20) * ASR(1,2,3)
 y = Square(440, 1000) * ADSR(1,1,1,1)
 z = Pwm(500,0.5) * Envelope(1)
 
-x = Sine(440) * Envelope(500, 1.0)
+x = Sine(440) * Envelope(1, 1.0)
 
 s.play(0, x)
 print(x.length)
@@ -23,10 +30,12 @@ seq = Sequence()
 seq << 1 << x << -2 << y
 seq.insert(z, 4)
 
-Library.save_signal(seq,'python')
-loaded = Library.load_signal('python')
+#Library.save_signal(seq,'python')
+Library.export_signal(seq, 'music/python2.wav')
+loaded = Library.import_signal('music/python2.wav')
+check(loaded)
 
-s.play_all(loaded)
+s.play(0,loaded)
 sleep(loaded.length)
 
 noise = Noise()

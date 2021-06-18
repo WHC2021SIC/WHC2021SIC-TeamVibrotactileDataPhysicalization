@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Rectangle
 
 from DataManagement import DataManagement
-from ContinentColor import Continent
+from ContinentColor import Continent,MonthsAudio
 
 from syntacts import *
 from time import sleep, time
@@ -45,9 +45,9 @@ continent=Continent()
 #print(DataManagement.max_min_by_country_by_year('Colombia', 2020))
 
 def rgbtohex(rgb):
-    r = int(rgb[0]*255)
-    g = int(rgb[1]*255)
-    b = int(rgb[2]*255)
+    r = int(rgb[0]*255.0)
+    g = int(rgb[1]*255.0)
+    b = int(rgb[2]*255.0)
     return f'#{r:02x}{g:02x}{b:02x}'
 
 def renderSensorScreen(Tou, radius):
@@ -85,7 +85,7 @@ class RenderVibration:
             if i !='Not':
                 val=True
         if val:
-            #print(listCount)
+            print(listCount)
             #print("diff")
             self.ValCountry(res)
             self.listBefore = listCount
@@ -99,15 +99,16 @@ class RenderVibration:
         for i,country in enumerate(listCount):
             if(country !='Not'):
                 MaxG=1
-                if country != 'Background':
+                if country == 'Background' or country == 'french' or country == 'Out':
+                    countVal=0.0
+                else:
                     if Death_Cas.get():
                         countVal=DataManagement.get_sum_country(country)
                         MaxG=self.MaxGlobal
                     else:
                         countVal=DataManagement.get_case_sum_country(country)
                         MaxG=self.MaxGlobalCases
-                else:
-                    countVal=0.0
+                    
 
                 ValCountr = countVal * (self.ValMaxSom / MaxG)
                 self.listRadius[i] = countVal * (self.radiusMax / MaxG)
@@ -148,6 +149,16 @@ class RenderVibration:
         self.t0 = time()-self.som.length
         self.listBefore = 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not', 'Not'
         self.MontCount = 0
+
+    def stop_sound(self):
+        s.stop(0)
+        s.stop(1)
+        s.stop(2)
+        s.stop(3)
+        s.stop(4)
+        s.stop(5)
+        s.stop(6)
+        s.stop(7)
     
     def render_all(self,value):
         s.set_volume(0,value)
@@ -158,12 +169,22 @@ class RenderVibration:
         s.set_volume(5,value)
         s.set_volume(6,value)
         s.set_volume(7,value)
+    
+    def start_value(self, som):
+        s.play(0, som)
+        s.play(1, som)
+        s.play(2, som)
+        s.play(3, som)
+        s.play(4, som)
+        s.play(5, som)
+        s.play(6, som)
+        s.play(7, som)
 
 renderVib = RenderVibration()
 
 def ModeMonth(PixNow):
-    countryPix=CountryPix(PixNow)
-    if countryPix!='Background':
+    countryPix, colorPix=CountryPix(PixNow)
+    if countryPix!='Background' or countryPix!='french':
         if renderVib.countryBefore == countryPix:
             return
         renderVib.countryBefore = countryPix
@@ -174,21 +195,32 @@ def ModeMonth(PixNow):
             MaxMonth,_=DataManagement.max_min_by_country_by_year(countryPix, 2020)
         else:
             listMonth=DataManagement.get_data_case_contry_by_year(countryPix, 2020)
-            MaxMonth,_=DataManagement.max_min_case_by_country_by_year(countryPix, 2020)
-        simMonth(listMonth,MaxMonth)
-        renderVib.start_all()
+            MaxMonth,_=DataManagement.max_min_case_by_country_by_year(countryPix, 2020) 
+        colorsArr=[[colorPix]*4]*2  
+        simMonth(listMonth,MaxMonth,colorsArr)
     else:
         renderVib.stop_all()
         renderVib.MontCount=0
         
 
-def simMonth(listMonth,MaxMonth):    
+def simMonth(listMonth,MaxMonth,colors): 
     if(renderVib.MontCount<len(listMonth) and clickOn):
+        #Month Sound
+        renderVib.stop_sound()
+        renderVib.render_all(1.0)
+        renderVib.start_value(MonthsAudio[renderVib.MontCount])
+        sleep(MonthsAudio[renderVib.MontCount].length)
+        #Month value
         valCurr=listMonth[renderVib.MontCount]
         ValCountr = valCurr * (renderVib.ValMaxSom / MaxMonth)
+        ValRadius = valCurr * (renderVib.radiusMax / MaxMonth)
         renderVib.render_all(ValCountr)
-        #print("mes: {} : {}".format(renderVib.MontCount, ValCountr))        
-        root.after(renderVib.TimeMont,simMonth,listMonth,MaxMonth)
+        renderVib.start_all()
+        #print("mes: {} : {}".format(renderVib.MontCount, ValCountr)) 
+
+        canvasTest.delete("all")
+        renderSensorScreen(colors,[ValRadius]*8)
+        root.after(renderVib.TimeMont,simMonth,listMonth,MaxMonth,colors)
     else:
         renderVib.stop_all()
         return
@@ -199,8 +231,6 @@ def ModeTotal(PixNow):
     renderVib.Countrys(NearCoun)
     canvasTest.delete("all")
     renderSensorScreen(colors,renderVib.listRadius)
-    
-    
 
 def NearestPixels(PixNow):
     t0=[0]*2
@@ -240,7 +270,7 @@ def CountryPix(PixNow):
         NearCoun=Country
     else:                   
         NearCoun='Background'
-    return NearCoun
+    return NearCoun, colorPix
 
 def reset_all():
     renderVib.stop_all()
