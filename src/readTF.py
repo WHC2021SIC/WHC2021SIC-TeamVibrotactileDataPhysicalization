@@ -36,13 +36,13 @@ i=0
 #NstadNew=np.array([106.510489,204.268260,128.503499,149.708490,0.429971,0.476176])
 
 NmeanRest = np.array([326.27320,12.01916,310.34624,222.99996])
-#NmeanNew = np.array([82.669758,126.453971,83.662616,85.599579,311.351552,-0.157280,0.038515])
-NmeanNew = np.array([408.942958,138.473131,394.008856,308.599539,0.548101,-0.518616])
-#NstadNew = np.array([106.510489,204.268260,128.503499,149.708490,179.464143,45.116143,9.908787])
-NstadNew = np.array([106.510489,204.268260,128.503499,149.708490,0.429971,0.476176])
+NmeanNew = np.array([82.669758,126.453971,83.662616,85.599579,311.351552,-0.157280,0.038515])
+#NmeanNew = np.array([408.942958,138.473131,394.008856,308.599539,0.548101,-0.518616])
+NstadNew = np.array([106.510489,204.268260,128.503499,149.708490,179.464143,45.116143,9.908787])
+#NstadNew = np.array([106.510489,204.268260,128.503499,149.708490,0.429971,0.476176])
 
 print("please don't touch the board!..")
-loaded_model = tf.keras.models.load_model('Models/xyForcePlateN7/')
+loaded_model = tf.keras.models.load_model('xyForcePlateN5/')
 
 totalTime = 10
 
@@ -142,7 +142,7 @@ valInit=np.mean(mean10, axis=0)
 
 continent = Continent()
 
-valMax = 400.0
+valMax = 450.0
 
 print("Start")
 while True:
@@ -159,17 +159,17 @@ while True:
     LenVal=lengthVal(ActVal)
     
     
-    if (LenVal>50.0 and LenVal<valMax):        
-        #res=np.append(ActVal,LenVal)
+    if (LenVal>60.0 and LenVal<valMax):        
+        res=np.append(ActVal,LenVal)
         #print("{}".format(res))
-        resultC=resultCon(np.array(values))
-        Pos=loaded_model.predict(resultC.reshape((1,6)))
-        #continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
+        resultC=resultCon(np.array(res))
+        Pos=loaded_model.predict(resultC.reshape((1,7)))
+        continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
         print("x: {}, y: {}, f:{}".format(float(Pos[0]),float(Pos[1]), LenVal))
 #         print("touch")
     elif(LenVal>valMax):        
         print("forca excessiva")
-    elif(LenVal<50.0):
+    elif(LenVal<30.0):
         s.stop(0)
         s.stop(1)
         s.stop(2)

@@ -68,9 +68,9 @@ class RenderVibration:
         self.MaxGlobal, self.MinGlobal = DataManagement.global_values()
         self.MaxGlobalCases, self.MinGlobalCases = DataManagement.global_case_values()
         self.ValMaxSom=1.0
-        self.som = Sine(450) * Envelope(500)
+        self.som = Sine(250) * Envelope(500)
         self.t0=time()-self.som.length
-        self.TimeMont=1000
+        self.TimeMont=2000
         self.modeMonth=True
         self.MontCount=0
         self.listRadius=[0]*8
