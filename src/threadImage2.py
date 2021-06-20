@@ -29,7 +29,7 @@ def _create_circle(self, x, y, r, **kwargs):
 canvasTest.create_circle = _create_circle
 
 root.wm_title("WHC 2021")
-#root.geometry("450x350")
+root.geometry("650x950")
 
 image = plt.imread('sudamericaLowRes.png') #root.image
 #print(image.shape)
@@ -85,7 +85,7 @@ class RenderVibration:
             if i !='Not':
                 val=True
         if val:
-            print(listCount)
+            #print(listCount)
             #print("diff")
             self.ValCountry(res)
             self.listBefore = listCount
@@ -295,6 +295,9 @@ def on_click(event):
 def off_click(event):
     global clickOn, circ
     clickOn=False
+    canvasTest.delete("all")
+    ColColombia=[1., 0.56863, 0., 1.]
+    renderSensorScreen([[ColColombia]*4]*2,[0.0]*8)
     reset_all()
 
 def on_move(event):

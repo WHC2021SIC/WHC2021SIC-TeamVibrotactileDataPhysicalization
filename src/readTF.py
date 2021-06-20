@@ -167,9 +167,9 @@ while True:
         continent.CollisionDetect(float(Pos[0]),float(Pos[1]))
         print("x: {}, y: {}, f:{}".format(float(Pos[0]),float(Pos[1]), LenVal))
 #         print("touch")
-    elif(LenVal>valMax):        
-        print("forca excessiva")
-    elif(LenVal<30.0):
+#     elif(LenVal>valMax):        
+#         print("forca excessiva")
+    elif(LenVal<40.0):
         s.stop(0)
         s.stop(1)
         s.stop(2)
