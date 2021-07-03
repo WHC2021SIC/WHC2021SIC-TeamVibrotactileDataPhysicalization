@@ -276,7 +276,12 @@ This is only available using the surface and having the whole circuit properly w
 ## Second approach
 For this second option of the project, much of the software is still being considered, except the dependence on Spankfun for force sensors, and in hardware only the glove-related is considered, [here](/scr/SecApproach.py). the code.
 
+![Senso](/images/readmeImages/south.gif)
+
 For this second approach the option to detect lines that can be executed in this [code](/scr/LineTest.py) was added
+
+![Senso](/images/readmeImages/lines.gif)
+
 
 <!-- Describe your software components -->
 
