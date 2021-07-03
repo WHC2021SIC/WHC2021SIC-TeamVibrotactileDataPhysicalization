@@ -6,6 +6,8 @@ Project Template for the IEEE World Haptics Conference 2021 Student Innovation C
 
 https://2021.worldhaptics.org/sic/
 
+[![dataPhysic](/images/readmeImages/youtubeImage.PNG)](https://www.youtube.com/watch?v=nnVV65OgoDQ)
+
 ## Authors
 
 ### Team
@@ -78,7 +80,7 @@ Heather Culbertson is a Gabilan Assistant Professor of Computer Science at the U
 
 Find more information on her [website](https://sites.usc.edu/culbertson/).
 
-## Contents
+# Contents
 
 Generated with `npm run toc`, see [INSTALL.md](INSTALL.md).
 
@@ -90,32 +92,177 @@ Once this documentation becomes very comprehensive, the main file can be split i
 
 - [Abstract](#abstract)
 - [Introduction](#introduction)
-  - [Documentation](#documentation)
-    - [Hardware](#hardware)
-      - [Sensors wiring](#sensors-wiring)
-    - [Software](#software)
+- [Documentation](#documentation)
+  - [Hardware](#hardware)
+    - [Sensors wiring](#sensors-wiring)
+  - [Software](#software)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 <!-- tocstop -->
 
-## Abstract
+# Abstract
 
 <!-- Summarize your project: for now copy the short pitch from your proposal -->
-We present a visuo-haptic display that enhances the experience in data visualization applications. An adaptive vibrotactile physicalization process converts information into vibration patterns that the user feels on top of 2D charts.
+Physicalization has been studied by the data visualization research community as a good way to help
+people to understand and communicate data through physical representation. This type of data representation is widely used in museums as tangible surfaces and mockups, furthermore it is used
+in the medical field as 3D prints for the study of human organs. However, building physical artifacts
+to represent data can be expensive and very time-consuming. Another way to build this kind of data
+visualization is using Augmented or Virtual Reality associated with tangible surfaces or haptic
+stimulation. In this work, we explore the use of vibrotactile actuators to physically convey additional information to the visual data representation. Likewise, In the context of helping people understand data visualization with limited graphic resources, we propose an adaptive data physicalization surface.
 
-## Introduction
+# Introduction
 
 <!-- Explain your project: for now copy the 300-word description from your proposal -->
 We present a visuo-haptic approach and system that augments the visual experience of graphic data visualization with meaningful vibrotactile information. The user of our system explores charts and graphs either on a video monitor or on printed paper. When touching the data visualization, they feel vibrotactile patterns on the back of their hands that communicate other dimensions of the data at the point of contact that are not printed but help understand the data. The system recognizes the interaction location on the chart by means of a set of force sensors placed at the corners of the supporting surface (either a plastic clipboard or a video monitor). An array of vibrotactile actuators placed at the joints on the back of the user's hand modulate frequency and amplitude to build signals that convey the appropriate stimuli, in a process of dynamic physicalization.
 
-### Documentation
+# Documentation
 
-#### Hardware
+## Hardware
 
-<!-- Describe your hardware components -->
+### 1. Components:
 
-##### Sensors wiring
+* 1 [Raspberry Pi 4 Microcontroller](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) - **$35.00**
+* 1 [Syntacts 8-Channel Amplifier Board](https://www.syntacts.org/hardware/)
+* 1 [Audio Injector Octo 8-Channel Sound Card](http://www.audioinjector.net/rpi-octo-hat) - **$58.00**
+* 1 [SparkFun Qwiic Hat for Raspberry Pi](https://www.sparkfun.com/products/14459) - **$6.50**
+* 1 [SparkFun Qwiic 12-Bit 4-Channel ADC](https://www.sparkfun.com/products/15334) - **$21.00**
+* 4 [Force Sensitive Resistors 0.5"](https://www.sparkfun.com/products/9375) - **$27.80**
+* 8 [Linear Resonant Actuator](https://www.vibration-motor.com/coin-vibration-motors/coin-linear-resonant-actuators-lra/g1040003d)
+
+* 1 [Qwiic Cable](https://www.sparkfun.com/products/14427) - **$1.50**
+* 4 [RCA to 3.5mm](https://www.amazon.com/-/pt/dp/B071R4R5B8/ref=sr_1_3?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=3.5+mm+to+rca+cable&qid=1625242939&sr=8-3) - **$23.92**
+
+* 1 [Ribbon Cable](https://www.sparkfun.com/products/10647) - **$4.95**
+
+* 1 [Micro SD 16GB](https://www.amazon.com/-/pt/dp/B073K14CVB/ref=sr_1_4?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3GNPDDGQS061C&dchild=1&keywords=micro+sd+16gb+class+10&qid=1625244091&sprefix=microSD+16GB+class%2Caps%2C291&sr=8-4) - **$6.80**
+* 4 [1k Resistor](https://www.sparkfun.com/products/10647) - **$3.80**
+
+* 1 [Clipboard](https://www.amazon.com/Officemate-Recycled-Clipboard-Profile-83219/dp/B00181D6RO/ref=sr_1_15?dchild=1&keywords=clipboard&qid=1625246253&sr=8-15)/[Photo picture frame](https://www.amazon.com/AmazonBasics-Photo-Frame-Black-2-Pack/dp/B079LMX8SR/ref=sr_1_1_sspa?c=ts&dchild=1&keywords=Picture+Frames&qid=1625246205&refinements=p_n_material_browse%3A335846011&s=furniture&sr=1-1-spons&ts_id=1063286&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzNzNGTkgxOEk0TUxLJmVuY3J5cHRlZElkPUEwOTAxODYxM0ExR0RBVjFMWktBTSZlbmNyeXB0ZWRBZElkPUEwNTY0MDI1RzE4V0FJVExGTkpSJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==)/[Square Glass](https://www.amazon.com/CleverDelights-Inch-Square-Glass-Tile/dp/B08BWCB5XH/ref=sr_1_2?dchild=1&keywords=glass+tile+square&qid=1625246842&sr=8-2) - **$5.09/17.95/10.99**
+
+* 1 [Micro-HDMI to HDMI](https://www.canakit.com/official-micro-hdmi-to-hdmi-cable.html?defpid=4651) - **$4.95**
+
+* 1 [Double Sided Tape](https://www.amazon.com/QIXIAN-Double-Sided-Tape-Multipurpose/dp/B09379TJRP/ref=sr_1_2_sspa?crid=20OP47QBY60AT&dchild=1&keywords=tape+double+sided&qid=1625246588&sprefix=tape+doubl%2Caps%2C281&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyRVkwU1E0RE9SVUs2JmVuY3J5cHRlZElkPUFUUTVHQ0QzT0NYVUsmZW5jcnlwdGVkQWRJZD1BMDMxOTY5MUpXM0lOSTNQVUNFWCZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=) - **$8.99**
+
+* 1 [Masking Tape](https://www.amazon.com/AmazonBasics-Masking-Tape-Inch-Rolls/dp/B07QHSKGMH/ref=sr_1_6?dchild=1&keywords=masked+tape&qid=1625247037&sr=8-6) - **$5.91**
+
+
+### 2. Initial settings:
+
+* **Actuators - cable - jumper male**: Each motor is connected and soldered to two of the ribbon cables, with the motors at one end and male jumpers at the other end.
+
+* **Force sensors**: As with the previous item, each sensor is connected to two of the ribbon cables, having the sensors at one end and male jumpers at the other end.
+
+* **Change I2C ADC address**: The I2c address 0x48 (default) is changed to address 0x49 because the Octo sound card is using this address as audio input, causing a conflict. For this you can continue with the [link](https://learn.sparkfun.com/tutorials/qwiic-12-bit-adc-hookup-guide/hardware-overview) steps. That is, cut the jumper connecting the center pin to 0x48 and then make a new connection to pin 0x49.
+
+
+
+* **Disconnect potentiometer A3 from ADC**: The ADC have potentiometer connected to AN3 by default, to avoid possible unwanted results it's necessary that the range of values and sensitivity of the sensors have a similar behavior, for this the potentiometer is disconnected. To do this, just cut the jumper that connects the two TRIM A3 pins, as shown in this [link](https://learn.sparkfun.com/tutorials/qwiic-12-bit-adc-hookup-guide/hardware-overview) or following image:
+
+![dataPhysic](/images/readmeImages/pot.jpg)
+
+### 3. Assemble hardware
+
+![assaml](/images/readmeImages/assamble.jpg)
+
+**A. Raspberry Pi - Octo sound card - Sparkfun hat**
+
+![raspberryOctohat](/images/readmeImages/raspberryOctohat.jpg)
+
+
+**B. Glove and Actuators**
+
+**Octo sound card - RCA to 3.5mm**
+
+![octoCir](/images/readmeImages/octoCircuit.jpg)
+
+**RCA to 3.5mm - Amplifier - Jumpers male**
+
+![octoamp](/images/readmeImages/octoAmplif.jpg)
+
+**Jumpers male - Actuators - Glove**
+
+Note that each motor will need to be gloved based on the pin number connected to the amplifier for proper representation of vibration. That is, each number represents the pin connected to the amplifier, following the image:
+
+![raspberryOctohat](/images/readmeImages/glove.png)
+
+**C. Touch surface:**
+
+**Sparkfun hat- Qwiic Cable - ADC**: The following circuit is performed for each of the force sensors (4 sensors)
+
+![raspberryOctohat](/images/readmeImages/circuit.PNG)
+
+![raspberryOctohat](/images/readmeImages/sensorForce.jpg)
+
+then we proceed to join the sensor with tape to the corners of the glass surface and on it the rigid support (metal washer in our case)
+
+![raspberryOctohat](/images/readmeImages/sensorGlass.jpg)
+
+in the same way we join the rest of the sensors to the surface
+
+![raspberryOctohat](/images/readmeImages/surface.jpg)
+
+## Software
+
+### 1. Main dependencies
+
+* **Raspberry pi 4**: The download and installation of Raspberry OS can be found on the official [website](https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up/2). Since the second approach is to use a Python GUI, it is recommended to use the operating system that comes with desktop version, as well as being more convenient to use.
+
+* **Octo sound card:**
+For a correct operation of the engines (as independent sounds) it is necessary to download and install the dependencies of the Octo sound card, for this follow the official instructions on the [website](https://github.com/WHC2021SIC/Octo)
+
+* **Syntacts:**
+The open source Syntacts are used for independent use and control of the actuators, which can be downloaded and installed by following the steps in the [repository](https://github.com/mahilab/Syntacts).
+
+### 2. Other dependencies
+
+**Python 3**
+
+`sudo apt install python3`
+
+**Matplotlib**
+
+`pip3 install matplotlib`
+
+**Numpy**
+
+`pip3 install numpy`
+
+**Pandas**
+
+`pip3 install pandas`
+
+**Adafruit_ADS1x15**
+
+`pip install Adafruit-ADS1x15`
+
+**Tkinter**
+
+`pip install tk`
+
+**tensorflow**
+
+`pip install tensorflow`
+
+### 3. Artificial Neural Network:
+
+For the first approach, artificial intelligence was used to detect the tactile position on the glass surface, this was done with the following steps:
+
+1. A 15cmx15cm grid is designed, where each square has a measurement of 1.5cm in real scale. This grid was placed on the surface of the glass and taped on, this grid can be found here.
+
+2. To create the data set, the grid points were used, that is, the grid is marked with a coordinate system 0 < x < 15 and 0 < y < 15 at each corner. For each point a data set of 5000 data is generated by varying the touch pressure without removing the finger from the surface and the label of each value is the coordinate point of the pressed grid, the code to acquire the data can be found here.
+
+3. Finally, the data is duly processed and the neural network model is built, then it is trained with the collected data, we have used a total of 250,000 data. For training (70%), validation (10%) and testing (20%). The training was performed with an NVIDIA GTX 1050 GPU. For more details of the model, see the code and for more details on the results of the data set, see text.
+
+
+## Getting started:
+
+Before running the basic codes, consider the following recommendations:
+
+* **Sensors and glass surface**: In the tests, changes in values were detected in the sensors indirectly, that is, the movement of part of the cable near the sensor affected the captured values, so we fastened the cable to the table with tape, at a distance of 5cm from sensor, as seen in the following image:
+
+
+
 
 <!-- Feel free to remove or adapt the following explanation once you have understood its potential implications for your project. -->
 
@@ -133,7 +280,6 @@ Made with [drawio-desktop](https://github.com/jgraph/drawio-desktop/) (online ve
 
 <!-- see: https://www.diagrams.net/blog/embed-diagrams-github-markdown -->
 
-#### Software
 
 <!-- Describe your software components -->
 
