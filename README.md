@@ -234,15 +234,15 @@ The open source Syntacts are used for independent use and control of the actuato
 
 **Adafruit_ADS1x15**
 
-`pip install Adafruit-ADS1x15`
+`pip3 install Adafruit-ADS1x15`
 
 **Tkinter**
 
-`pip install tk`
+`pip3 install tk`
 
 **tensorflow**
 
-`pip install tensorflow`
+`pip3 install tensorflow`
 
 ### 3. Artificial Neural Network:
 
@@ -261,35 +261,31 @@ Before running the basic codes, consider the following recommendations:
 
 * **Sensors and glass surface**: In the tests, changes in values were detected in the sensors indirectly, that is, the movement of part of the cable near the sensor affected the captured values, so we fastened the cable to the table with tape, at a distance of 5cm from sensor, as seen in the following image:
 
+![Sensor Configuration](/images/readmeImages/surfacejoin.jpg)
+
+* **Glove and Actuators**: For a better experience and sensation of sensitivity of the actuators in the hand, it is advisable to place the motors close to the interphalangeal and metacarpophalangeal joints according to the corresponding actuator.
+
+![Hand](/images/readmeImages/hand.jpg)
+
+## First approach
+
+This is only available using the surface and having the whole circuit properly wired, the Python code is [here](/scr/FirstApproach.py).
 
 
+## Second approach
+For this second option of the project, much of the software is still being considered, except the dependence on Spankfun for force sensors, and in hardware only the glove-related is considered, [here](/scr/SecApproach.py). the code.
 
-<!-- Feel free to remove or adapt the following explanation once you have understood its potential implications for your project. -->
-
-We use the SparkFun Qwiic system to rapidly and remotely prototype sensors without much soldering. Qwiic uses the I2C communication protocol with addresses assigned per board model.
-Our Qwiic-based architectures may require:
-
-- 1 Qwiic MUX I2C multiplexer board per group identical sensor/board model (example: needed by 2 flex finger boards in the figures below)
-- 1 Qwiic ADC board per group of 4 sensors that are not implemented as Qwiic boards (example: needed by 4 FSRs sensors in the figures below)
-
-<!-- Adapt this sensor architecture, covering all possible sensors accross all teams, to your team. -->
-
-![Sensor Configuration](images/architecture/sensor-configuration.svg)
-
-Made with [drawio-desktop](https://github.com/jgraph/drawio-desktop/) (online version: [diagrams.net](https://www.diagrams.net/)).
-
-<!-- see: https://www.diagrams.net/blog/embed-diagrams-github-markdown -->
-
+For this second approach the option to detect lines that can be executed in this [code](/scr/LineTest.py) was added
 
 <!-- Describe your software components -->
 
-## Acknowledgements
+# Acknowledgements
 
 <!-- Describe your software components -->
 
 SIC chairs would like to thank Evan Pezent, Zane A. Zook and Marcia O'Malley from [MAHI Lab](http://mahilab.rice.edu) at Rice University for having distributed to them 2 [Syntacts](https://www.syntacts.org) kits for the [IROS 2020 Intro to Haptics for XR Tutorial](http://iros-haptics-tutorial.org/).
 SIC co-chair Christian Frisson would like to thank Edu Meneses and Johnty Wang from [IDMIL](http://idmil.org) at McGill University for their recommendations on Raspberry Pi hats for audio and sensors.
 
-## License
+# License
 
 This documentation is released under the terms of the Creative Commons Attribution Share Alike 4.0 International license (see [LICENSE.txt](LICENSE.txt)).
